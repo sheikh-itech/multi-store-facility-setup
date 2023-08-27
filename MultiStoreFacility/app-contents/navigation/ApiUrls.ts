@@ -2,7 +2,8 @@
 class ApiUrls {
 
     private static devUrl = 'http://192.168.225.109:9091/v1/msf/';
-    private static prodUrl = 'https://msf.com/v1/';
+    private static prodUrl = 'http://192.168.225.109:9091/v1/msf/';
+    //private static prodUrl = 'https://msf.com/v1/';
     private static BaseUrl = __DEV__ ? ApiUrls.devUrl : ApiUrls.prodUrl;
 
     //Regular URI definitions

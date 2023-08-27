@@ -15,6 +15,7 @@ function UsersDetail({ nav }: any): JSX.Element {
     useEffect(() => { listAllUsers();  }, []);
 
     const listAllUsers = () => {
+        debugger
         HttpService.getApi(ApiUrls.ListObjects)
             .then((res) => {
                 setUsers(res.data);
