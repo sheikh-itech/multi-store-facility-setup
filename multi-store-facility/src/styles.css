@@ -1,0 +1,100 @@
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Msf Sidebar Start */
+
+:root {
+    --sidebarWidth: 200px;
+    --headerHeight: 40px;
+    --displayEle: block;
+    --sidebarMenu: inline;
+    --paddingFive: 5px;
+    --marginRight: 20px;
+    --centerText: left;
+    --rightIcon: inline;
+    --leftText: left;
+}
+
+ul.msf-nav-list>li.active {
+    border-right: 5px solid #1ABB9C;
+}
+ul.msf-nav-list>li.active>a {
+    text-shadow: #146354 0 -1px 0;
+    background: linear-gradient(#105650,#105650),#105650;
+    box-shadow: #0c332c 0 1px, inset #385852 0 1px;
+}
+ul.msf-sub-nav>li.active {
+    background-color: #145f52;
+}
+/* Msf Sidebar End */
+
+
+/* Msf Blue Sidebar Start */
+ul.msf-blue-nav-list>li.active {
+    border-right: 5px solid #1ABB9C;
+}
+ul.msf-blue-nav-list>li.active>a {
+    text-shadow: rgba(0,0,0,.25) 0 -1px 0;
+    background: linear-gradient(#334556,#2C4257),#2A3F54;
+    box-shadow: #00000040 0 1px, inset #ffffff29 0 1px;
+}
+ul.msf-blue-sub-nav>li.active {
+    background-color: #ffffff0f;
+}
+ul.msf-blue-sm-nav>li.active {
+    border-right: 5px solid #1ABB9C;
+}
+/* Msf Blue Sidebar End */
+
+
+/* Common Display Style Start */
+.display-none {
+    display: none;
+}
+.display-none-impl {
+    display: none !important;
+}
+.display-block {
+    display: block;
+}
+.display-block-impl {
+    display: block !important;
+}
+/* Common Display Style End */
+
+/* MSF Mask Start */
+.show-loader {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255,255,255,0.7);
+    z-index: 9999;
+    display: block;
+  }
+  
+    .show-loader::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 48%;
+      top: 40%;
+      width: 40px;
+      height: 40px;
+      border-style: solid;
+      border-color: black;
+      border-top-color: transparent;
+      border-width: 4px;
+      border-radius: 50%;
+      -webkit-animation: spin .8s linear infinite;
+      animation: spin .8s linear infinite;
+    }
+/* MSF Mask End */

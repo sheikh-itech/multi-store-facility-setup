@@ -1,0 +1,76 @@
+
+<div class="msf-side-nav">
+
+    <ul class="msf-nav-list"  (click)="onMenuItemClick($event)">
+        <li class="menu-items">
+            <a routerLink="/home">
+                <i class="fa fa-home"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="menu-items">
+            <a routerLink="/userDetail">
+                <i class="fa fa-file-text"></i>
+                <span>User Detail</span>
+            </a>
+        </li>
+        <li class="menu-items">
+            <a routerLink="/userUpdate">
+                <i class="fa fa-file-text"></i>
+                <span>User Update</span>
+            </a>
+        </li>
+        
+        <li><!-- Dont add 'menu-items' in parent li -->
+            <a>
+                <i class="fa fa-list"></i> 
+                Links
+                <i class="fa fa-chevron-down right-i"></i>
+            </a>
+            <ul class="msf-sub-nav">
+                <li class="menu-items">
+                    <a routerLink="/userUpdate">Test 1</a>
+                </li>
+                <li class="menu-items">
+                    <a routerLink="/userDetail">Test 1</a>
+                </li>
+                <li class="menu-items">
+                    <a>Test 1</a>
+                </li>
+                <li class="menu-items">
+                    <a>Test 1</a>
+                </li>
+                <li class="menu-items">
+                    <a>Test 1</a>
+                </li>
+                <li class="menu-items">
+                    <a>Test 1</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-items">
+            <a routerLink="/userUpdate">
+                <i class="fa fa-file-text"></i>
+                <span>User Update</span>
+            </a>
+        </li>
+
+        <li><!-- Dont add 'menu-items' in parent li -->
+            <a>
+                <i class="fa fa-list"></i> 
+                Links
+                <i class="fa fa-chevron-down right-i"></i>
+            </a>
+            <ul class="msf-sub-nav">
+                <li class="menu-items">
+                    <a routerLink="/userUpdate">Test 1</a>
+                </li>
+                <li class="menu-items">
+                    <a routerLink="/userDetail">Test 1</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</div>

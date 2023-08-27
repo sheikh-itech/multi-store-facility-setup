@@ -1,0 +1,52 @@
+
+.msf-header-icon {
+    font-size: 25px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: whitesmoke;
+    width: fit-content;
+    cursor: pointer;
+    display: inline;
+}
+
+.user-setting {
+    font-size: 15px;
+    cursor: pointer;
+    display: inline;
+    right: 10px;
+    position: absolute;
+}
+.user-setting:after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    vertical-align: baseline;
+}
+.user-setting > span {
+    vertical-align: sub;
+}
+.log-out {
+    color: whitesmoke;
+    font-size: 15px;
+    cursor: pointer;
+    right: 10px;
+    position: absolute;
+    border: 1px solid #5fbbb5;
+    border-radius: 5px;
+    padding: 0 8px;
+    margin: 0;
+    background: #72aca7;
+    top: 25px;
+    display: none;
+}
+.user-setting:hover + .log-out {
+    display: block !important;
+}
+.log-out:hover {
+    display: block !important;
+}

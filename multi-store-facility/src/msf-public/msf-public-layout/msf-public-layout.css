@@ -1,0 +1,61 @@
+
+.msf-start {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+/* Msf Header Start */
+.msf-header {
+    top: 0;
+    height: var(--headerHeight);
+    width: calc(100vw - var(--sidebarWidth));
+    --position: fixed;
+    background-color: #518480;
+    margin-left: var(--sidebarWidth);
+}
+/* Msf Header End */
+
+/* Msf Sidebar Start */
+.msf-sidebar {
+    width: var(--sidebarWidth);
+    display: var(--displayEle);
+    height: calc(100vh);
+    background: #2A3F54;
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+.msf-sidebar > ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	margin-top: 20px;
+}
+.msf-sidebar li {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/* MsfSidebar End */
+
+/* Msf Main Content Start */
+.msf-content {
+    width: auto;
+    min-width: -webkit-fill-available;
+    height: 100%;
+    margin-left: var(--sidebarWidth);
+    background: #eaf2f5;
+    padding: 8px;
+    /*height: calc(100vh - var(--headerHeight));*/
+}
+.msf-sub-content {
+    width: 100%;
+    height: 100%;
+    background: #f9f8f8;
+    padding: 10px;
+}
+/* Msf Main Content End */

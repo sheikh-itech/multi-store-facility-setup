@@ -1,0 +1,111 @@
+
+<div class="msf-side-nav">
+
+    <ul class="msf-blue-nav-list"  (click)="onMenuItemClick($event)">
+        <li class="top-menu">
+            <a routerLink="/home">
+                <i class="fa fa-home"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="top-menu">
+            <a routerLink="/userDetail">
+                <i class="fa fa-file-text"></i>
+                <span>User Detail</span>
+            </a>
+        </li>
+        <li class="top-menu">
+            <a routerLink="/userUpdate">
+                <i class="fa fa-file-text"></i>
+                <span>User Update</span>
+            </a>
+        </li>
+        
+        <li class="top-menu dummy-link">
+            <a class="top-link-text">
+                <i class="fa fa-list"></i> 
+                Links
+                <i class="fa fa-chevron-down right-i"></i>
+            </a>
+            <ul class="msf-blue-sub-nav" [@slideInOut]="navStates[0]" itemid="0">
+                <li class="sub-menu">
+                    <a routerLink="/userUpdate">Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a routerLink="/userDetail">Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a>Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a>Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a>Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a>Test 1</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="top-menu dummy-link">
+            <a class="top-link-text">
+                <i class="fa fa-list"></i> 
+                Links
+                <i class="fa fa-chevron-down right-i"></i>
+            </a>
+            <ul class="msf-blue-sub-nav" [@slideInOut]="navStates[1]" itemid="1">
+                <li class="sub-menu">
+                    <a routerLink="/userUpdate">Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a routerLink="/userDetail">Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a>Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a>Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a>Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a>Test 1</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="top-menu">
+            <a routerLink="/userUpdate">
+                <i class="fa fa-file-text"></i>
+                <span>User Update</span>
+            </a>
+        </li>
+
+        <li class="top-menu dummy-link">
+            <a class="top-link-text">
+                <i class="fa fa-list"></i> 
+                Links
+                <i class="fa fa-chevron-down right-i"></i>
+            </a>
+            <ul class="msf-blue-sub-nav" [@slideInOut]="navStates[2]" itemid="2">
+                <li class="sub-menu">
+                    <a routerLink="/userUpdate">Test 1</a>
+                </li>
+                <li class="sub-menu">
+                    <a routerLink="/userDetail">Test 1</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="top-menu">
+            <a routerLink="/test">
+                <i class="fa fa-file-text"></i>
+                <span>Test</span>
+            </a>
+        </li>
+    </ul>
+
+</div>

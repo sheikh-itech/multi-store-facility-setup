@@ -1,0 +1,79 @@
+1. Create App TS Template
+
+	>npx react-native@latest init MultiStoreFacility --template react-native-template-typescript
+
+2. Command To Run App
+	>npx react-native run-android
+
+3. Command To Search Device And Run/Install
+	>adb devices
+	>adb -s <device name> reverse tcp:8081 tcp:8081
+	Example: >adb -s N7XCXWWG794LBYLF reverse tcp:8081 tcp:8081
+
+4. Library to add <SafeAreaProvider> for complex app
+	>npm install react-native-safe-area-context
+
+5. Link app to <SafeAreaProvider> [Not needed above react-native@0.6]
+	>npx react-native link react-native-safe-area-context
+
+6. Font Awesome Use
+	>npm install --save react-native-vector-icons
+	>npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-native-fontawesome
+
+	>npm install react-native-svg
+
+7. Font awesome use in regular way
+	>npm install --save-dev @types/react-native-vector-icons
+
+8. Link SVG Manually
+	1. Open MainApplication.java
+	2. Add line -> packages.add(new SvgPackage()) in getPackages() method
+	3. Inside android folder run
+		>gradlew clean
+	4. If gradlew.bat not found, run below command from Root Directory
+		>npx react-native gradle-init
+
+9. Clean the project
+	>npx react-native clean
+
+10. Bootstrap use in React Native
+	>npm install react-native-bootstrap-styles bootstrap
+
+11. Navigation in App
+	>npm install @react-navigation/native @react-navigation/native-stack
+	>npx expo install react-native-screens react-native-safe-area-context
+	>npm install react-native-screens react-native-safe-area-context
+	>npm i pod-install  [For IOS to work with React Native installs CocoaPods]
+	 OR
+	>npx pod-install ios
+react-native-screens: provides native primitives for screens [improve performance and memory usage]
+react-native-safe-area-context: handle safe areas in app	
+
+12. React Native Elements UI
+	>npm install react-native-elements
+
+13. Http/Api Calls using third party library
+	>npm install axios
+
+14. ZXing QR Scanner
+	>npm install @zxing/library
+	>npm i react-native-camera
+	>npm install @zxing/library react-native-camera-kit
+	>npm install react-native-camera react-native-permissions
+
+15. Realm Database
+	>npm install realm
+
+
+
+NPX Tools
+=========
+>npx react-native start --reset-cache
+
+
+Tools Inside android dir
+========================
+>gradlew
+>gradlew cleanBuildCache
+>gradlew wrapper --gradle-version 7.3.1 --distribution-type all
+
