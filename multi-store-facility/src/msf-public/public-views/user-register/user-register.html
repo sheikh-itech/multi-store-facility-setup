@@ -1,0 +1,49 @@
+<div class="signup-form text-select">
+    <form>
+		<h2>Register</h2>
+		<p class="hint-text">Email will be required for login</p>
+        <app-alert></app-alert>
+        <div class="form-group">
+			<div class="row">
+				<div class="col">
+                    <input type="text" class="form-control" [(ngModel)]="user.firstName" name="firstName" placeholder="First Name" required="required">
+                </div>
+				<div class="col">
+                    <input type="text" class="form-control" [(ngModel)]="user.lastName" name="lastName" placeholder="Last Name" required="required">
+                </div>
+			</div>        	
+        </div>
+        <div class="form-group">
+        	<input type="email" class="form-control" [(ngModel)]="user.email" name="email" placeholder="Email" required="required">
+        </div>
+        <div class="form-group">
+			<div class="row">
+				<div class="col">
+                    <input type="number" class="form-control" [(ngModel)]="user.mobile" name="mobile" placeholder="Mobile" 
+                        onKeyPress="if(this.value.length==10) return false;" required="required">
+                </div>
+				<div class="col text-select">
+                    <input type="date" class="form-control" [(ngModel)]="user.dob" name="dob" placeholder="Birth Date" required="required">
+                </div>
+			</div>        	
+        </div>
+        
+		<div class="form-group">
+            <input type="password" class="form-control" [(ngModel)]="user.password" name="password" placeholder="Password" required="required">
+        </div>
+		<div class="form-group">
+            <input type="password" class="form-control" [(ngModel)]="privateInfo" name="privateInfo" placeholder="Confirm Password" required="required">
+        </div>        
+        <div class="form-group terms-conditions">
+			<label class="form-check-label">
+                <input type="checkbox" [(ngModel)]="user.termsCond" name="termsCond" required="required" /> 
+                I accept the
+            </label>
+            <a>Terms of Use</a> &amp; <a>Privacy Policy</a>
+		</div>
+		<div class="form-group">
+            <button type="submit" (click)="register();" class="btn btn-success btn-lg btn-block">Register Now</button>
+        </div>
+    </form>
+	<div class="text-center">Already have an account? <a href="/login">Sign in</a></div>
+</div>

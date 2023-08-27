@@ -7,22 +7,22 @@
             </div>
             <app-alert></app-alert>
             <div class="row" style="margin: auto 5px;">
-                <input type="text" [(ngModel)]="user.username" name="username" class="form-control" placeholder="Username">
+                <input type="text" [(ngModel)]="login.username" name="username" class="form-control" placeholder="Username">
             </div>
 
             <div class="row" style="margin: auto 5px;">
-                <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Password">
+                <input type="password" [(ngModel)]="login.password" name="password" class="form-control" placeholder="Password">
             </div>
             <div class="row" style="margin: auto 5px;">
                 <label>
-                    <input type="checkbox" [(ngModel)]="user.remember" name="remember"> Remember me
+                    <input type="checkbox" [(ngModel)]="login.remember" name="remember"> Remember me
                 </label>
 
-                <button type="submit" (click)="login();">Login</button>
+                <button type="submit" (click)="signIn();">Login</button>
             </div>
 
             <div class="row" style="margin: auto 5px;background-color:#f1f1f1;">
-                <button type="button" class="cancelbtn">Cancel</button>
+                <button type="button" class="cancelbtn" (click)="publicInfo()">Cancel</button>
                 <span>Forgot <a href="#/login">password?</a></span>
             </div>
         </form>

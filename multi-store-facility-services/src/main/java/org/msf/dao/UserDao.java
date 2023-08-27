@@ -1,6 +1,6 @@
 package org.msf.dao;
 
-import org.msf.beans.Customer;
+import org.msf.beans.User;
 import org.msf.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -9,12 +9,12 @@ import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CustomerDao {
+public class UserDao {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
-	public Customer persistCustomer(Customer customer) {
+	public User persistUser(User user) {
 		
 		if(!mongoTemplate.collectionExists(Constants.MSF_Customer)) {
 			Index index = new Index();
@@ -22,6 +22,6 @@ public class CustomerDao {
 			mongoTemplate.indexOps(Constants.MSF_Customer).ensureIndex(index);
 		}
 		
-		return mongoTemplate.insert(customer, Constants.MSF_Customer);
+		return mongoTemplate.insert(user, Constants.MSF_Users);
 	}	
 }

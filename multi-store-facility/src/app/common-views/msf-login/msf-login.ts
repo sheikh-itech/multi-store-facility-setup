@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { User } from 'src/common/beans/user';
+import { Component, OnInit } from '@angular/core';
+import { Login } from 'src/common/beans/login';
 import { MsfHttpService } from 'src/common/services/msf-http-service';
 import { Validation } from 'src/common/utilities/validation';
 import { AlertService } from '../alert/alert-service';
@@ -12,28 +12,57 @@ import { environment } from 'src/environments/environment';
     templateUrl: './msf-login.html',
     styleUrls: ['./msf-login.css']
 })
-export class MsfLogin {
+export class MsfLogin implements OnInit {
 
-    user: User;
+    login: Login;
 
     private options = {
         autoClose: true,
         keepAfterRouteChange: false
     };
 
-    constructor(private http: MsfHttpService, private alert: AlertService, private route: Router) {
-        this.user = new User();
+    constructor(private http: MsfHttpService, private alert: AlertService, private router: Router) {
+        this.login = new Login();
     }
 
-    login(): void {
+    ngOnInit(): void {
 
-        if (Validation.validate(this.user)) {
+        let principal = UserService.getUserToken();
 
-            this.http.postApi(environment.authenticate, this.user).subscribe({
+        if(principal && principal.length>100) {
+
+            this.http.postApi(environment.validate, null).subscribe({
+                next: (resp) => {
+                    if(resp.success && resp.status=='OK')
+                        this.router.navigate(['/home']);
+                    else
+                        this.router.navigate(['/login']);
+                },
+                error: (err) => {
+                    // Handle errors here
+                    this.router.navigate(['/login']);
+                },
+                complete: () => {
+                    // This block is executed when the observable completes (optional)
+                }
+            }); 
+        }
+    }
+
+    publicInfo(): void {
+
+        this.router.navigate(['/public']);
+    }
+
+    signIn(): void {
+
+        if (Validation.validate(this.login)) {
+
+            this.http.postApi(environment.authenticate, this.login).subscribe({
                 next: (resp) => {
                     if(resp.success && resp.status=="ACCEPTED") {
-                        this.route.navigate(['/home']);
-                        UserService.setUserDetail(resp.data, this.user.remember);
+                        this.router.navigate(['/home']);
+                        UserService.setUserDetail(resp.data, this.login.remember);
                     } else
                         this.alert.error(resp.message, this.options);
                 },

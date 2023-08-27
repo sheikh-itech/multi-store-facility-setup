@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.msf.beans.AuthDetail;
 import org.msf.beans.Response;
-import org.msf.beans.User;
+import org.msf.beans.LoginInfo;
 import org.msf.beans.UserDetail;
 import org.msf.utils.MsfAuthUtil;
 import org.msf.utils.MsfSecurityUtil;
@@ -43,31 +43,33 @@ public class AuthenticationApi {
 	private MsfAuthUtil authUtil;
 	
 	@RequestMapping(value="/user", method=RequestMethod.POST)
-	public ResponseEntity<Response> authenticate(@RequestBody User user) {
+	public ResponseEntity<Response> authenticate(@RequestBody LoginInfo login) {
 	
 		Response res = new Response();
 		UserDetail principal = null;
 		
 		try {
-			principal = (UserDetail) authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())).getPrincipal();
+			principal = (UserDetail) authManager.authenticate(
+					new UsernamePasswordAuthenticationToken(login.getUsername(), 
+							login.getPassword())).getPrincipal();
 			
 			logger.info("User authentication success");
 		}  catch (UsernameNotFoundException ex) {
-			logger.error("Username Not Found: " + user.getUsername());
+			logger.error("Username Not Found: " + login.getUsername());
 			res.setMessage("Username not found");
 			res.setStatus(HttpStatus.NOT_FOUND);
 		} catch (AccountStatusException ex) { // User account locked, disabled
-			logger.error("User account has been locked: " + user.getUsername());
+			logger.error("User account has been locked: " + login.getUsername());
 			res.setMessage("User account has been locked");
 			res.setStatus(HttpStatus.LOCKED);
 			
 		} catch (BadCredentialsException ex) {
-			logger.error("Incorrect username or password: " + user.getUsername());
+			logger.error("Incorrect username or password: " + login.getUsername());
 			res.setMessage("Incorrect username or password");
 			res.setStatus(HttpStatus.UNAUTHORIZED);
 			
 		} catch (AuthenticationServiceException ex) { // Internal system exception
-			logger.error("Internal Auth Server Error:: " + user.getUsername());
+			logger.error("Internal Auth Server Error:: " + login.getUsername());
 			res.setMessage("Internal Auth Server Error");
 			res.setStatus(HttpStatus.FORBIDDEN);
 			
@@ -77,7 +79,7 @@ public class AuthenticationApi {
 			res.setStatus(HttpStatus.FORBIDDEN);
 			
 		} catch (Exception ex) {
-			logger.error("Internal Server Error:: " + user.getUsername());
+			logger.error("Internal Server Error:: " + login.getUsername());
 			res.setMessage("Internal Server Error");
 			res.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -113,13 +115,13 @@ public class AuthenticationApi {
 			res.setStatus(HttpStatus.ACCEPTED);
 			res.setMessage("User authentication success");
 			
-			logger.info("Auth token generated for user: " + user.getUsername());
+			logger.info("Auth token generated for user: " + login.getUsername());
 		} else {
 			if(res.getMessage()==null || res.getMessage().isBlank()) {
 				res.setStatus(HttpStatus.UNAUTHORIZED);
 				res.setMessage("Failed to authenticate user");
 			}
-			logger.error("Failed to generate user identity: "+user.getUsername());
+			logger.error("Failed to generate user identity: "+login.getUsername());
 		}
 		
 		return new ResponseEntity<Response>(res, HttpStatus.OK);

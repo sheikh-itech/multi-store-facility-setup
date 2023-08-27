@@ -10,7 +10,7 @@ import { MsfAnimateLayout } from 'src/msf-app/msf-animate-layout/msf-animate-lay
 import { MsfViewImport } from '../msf-app/msf-view-import';
 import { MsfPublicViewImport } from '../msf-public/msf-public-import';
 
-const animatelayout = false;
+const animateLayout = false;
 
 const routes: Routes = [
 
@@ -19,7 +19,7 @@ const routes: Routes = [
 
     {
         path: '',
-        component: animatelayout ? MsfAnimateLayout : MsfLayout,
+        component: animateLayout ? MsfAnimateLayout : MsfLayout,
         children: [
             { path: 'accessDenied', component:  MsfViewImport.AccessDenied},
             { path: 'test', component:  MsfViewImport.AngularDefaultPage, canActivate:[RouteGuard]},
@@ -38,7 +38,8 @@ const routes: Routes = [
         component: MsfPublicLayout,
         children: [
             { path: '', component:  MsfPublicViewImport.GeneralInfo},
-            { path: 'futureTasks', component:  MsfPublicViewImport.FutureTasks}            
+            { path: 'futureTasks', component:  MsfPublicViewImport.FutureTasks},
+            { path: 'register', component:  MsfPublicViewImport.UserRegister}
         ]
     }
 ];

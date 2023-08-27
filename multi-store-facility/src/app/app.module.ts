@@ -6,25 +6,21 @@ import { MultiStoreFacility } from './multi-store-facility';
 import { FormsModule } from '@angular/forms';
 import { MsfLogin } from './common-views/msf-login/msf-login';
 import { CommonModule } from '@angular/common';
-import { AlertComponent } from './common-views/alert/alert-component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { RequestInterceptor } from 'src/common/services/request-interceptor';
+import { HttpClientModule } from '@angular/common/http';
 import { MsfModule } from 'src/msf-app/msf-module';
 import { MsfPublicModule } from 'src/msf-public/msf-public-module';
+import { SharedModule } from './shared.module';
 
 @NgModule({
 
     declarations: [
-        MultiStoreFacility, MsfLogin, AlertComponent
+        MultiStoreFacility, MsfLogin
     ],
     imports: [
         BrowserModule, CommonModule, FormsModule, MsfModule, AppRoutingModule, HttpClientModule,
-        MsfPublicModule
+        MsfPublicModule, SharedModule
     ],
-    providers: [/*RouteChangeService,*/
-
-        { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
-    ],
+    providers: [/*RouteChangeService,*/],
     bootstrap: [MultiStoreFacility]
 })
 export class AppModule { }

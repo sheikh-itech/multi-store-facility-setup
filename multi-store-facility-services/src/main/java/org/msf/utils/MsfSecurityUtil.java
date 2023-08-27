@@ -25,10 +25,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class MsfSecurityUtil {
 
-	@Value("${idleTime: 0:10:0}")
-	private String idleTime;
-	@Value(value="${parichaiKey: randomparichaikey}")
-	private String parichaiKey;
+	@Value("${idleLoginTime: 0:10:0}")
+	private String idleLoginTime;
+	@Value(value="${securityKey: randomsecuritykey}")
+	private String securityKey;
 	
 	public String extractUsername(String token) {
 		
@@ -53,7 +53,7 @@ public class MsfSecurityUtil {
 
 	private Claims extractAllClaims(String token) {
 		
-		return Jwts.parser().setSigningKey(parichaiKey).parseClaimsJws(token).getBody();
+		return Jwts.parser().setSigningKey(securityKey).parseClaimsJws(token).getBody();
 	}
 	
 	public Boolean isTokenExpired(String token) {
@@ -109,7 +109,7 @@ public class MsfSecurityUtil {
 			
 		return	Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(new Date(System.currentTimeMillis()))
 			.setExpiration(new Date(System.currentTimeMillis()+ idleTime()))
-				.signWith(SignatureAlgorithm.HS256, parichaiKey).compact();
+				.signWith(SignatureAlgorithm.HS256, securityKey).compact();
 	}
 	
 	public Boolean validateToken(String token, UserDetails userDetails) {
@@ -123,7 +123,7 @@ public class MsfSecurityUtil {
 		
 		long finalTime;
 		
-		String [] timeDetail = idleTime.split(":");
+		String [] timeDetail = idleLoginTime.split(":");
 		if(timeDetail.length==3) {
 			
 			int hours = Utility.parseInt(timeDetail[0]);

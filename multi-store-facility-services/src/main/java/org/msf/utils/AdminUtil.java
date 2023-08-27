@@ -1,13 +1,16 @@
 package org.msf.utils;
 
-import java.util.Random;
-
 public class AdminUtil {
 
 	public static String generateId(String email, String fName, String lName, String dob) {
 		
 		String username = "";
+		username = username+fName;
 		
+		dob = dob.replaceAll("-", ""); //dd-mm-yyyy
+		username = username+dob.substring(0, 4)+lName;
+		
+		/*
 		if(email.length()>=2 && username.length()<10) {
 			username = username + email.substring(0, 2);
 		}
@@ -18,6 +21,7 @@ public class AdminUtil {
 			username = username + lName.substring(0, 2);
 		}
 		if(dob.length()>=3 && username.length()<10) {
+			dob = dob.replaceAll("-", ""); //dd-mm-yyyy
 			username = username + dob.substring(dob.length()-4, dob.length());
 		}
 		if(username.length()<10) {
@@ -26,7 +30,7 @@ public class AdminUtil {
 				username = username + ((char) (random.nextInt(26) + 'a'));
 			}
 		}
-		
+		*/
 		return username.toLowerCase();
 	}
 	

@@ -3,6 +3,7 @@ import { MsfPublicSidebar } from "src/msf-public/msf-public-sidebar/msf-public-s
 
 import { GeneralInfo } from "src/msf-public/public-views/general-info/general-info";
 import { FutureTasks } from "src/msf-public/public-views/future-tasks/future-tasks";
+import { UserRegister } from "src/msf-public/public-views/user-register/user-register";
 
 
 /**
@@ -14,7 +15,7 @@ export const MsfPublicViewImport = {
      * declarations- this is reused in msf-module
      */
     declarations: [
-        MsfPublicLayout, MsfPublicSidebar,
+        MsfPublicLayout, MsfPublicSidebar, UserRegister,
         
         GeneralInfo, FutureTasks
     ],
@@ -23,5 +24,6 @@ export const MsfPublicViewImport = {
      * All below ro routing reuse purpose
      */
     GeneralInfo: GeneralInfo,
-    FutureTasks: FutureTasks
+    FutureTasks: FutureTasks,
+    UserRegister: UserRegister
 }
