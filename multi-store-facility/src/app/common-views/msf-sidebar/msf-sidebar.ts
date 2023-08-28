@@ -43,7 +43,7 @@ export class MsfSidebar {
     async onMenuItemClick(event: any) {
 
         let ele = event.target.closest("LI") as HTMLElement;
-        if(ele.classList.contains("dummy-link")) {
+        if(ele.classList.contains("dummy-link") || ele.classList.contains("home")) {
             this.startNavigation(event);
             return;
         }

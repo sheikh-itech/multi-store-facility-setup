@@ -12,13 +12,20 @@ import { environment } from 'src/environments/environment';
 })
 export class UserRegister {
 
+    useCustomId: boolean = false;
+    registerDone: boolean = false;
     privateInfo: string;
     user: Register;
 
     private options = {
         autoClose: true,
+        autoCloseTime: 4000,
         keepAfterRouteChange: false
     };
+    login = {
+        emailId: "",
+        userId: ""
+    }
 
     constructor(private alert: AlertService, private http: MsfHttpService) {
         this.privateInfo = '';
@@ -41,13 +48,18 @@ export class UserRegister {
             this.http.postApi(environment.register, this.user).subscribe({
                 next: (resp) => {
                     if(resp.success && resp.status=="CREATED") {
-                        this.alert.success(resp.message, this.options);
+                        this.user = new Register();
+                        this.login.emailId = resp.data.email;
+                        this.login.userId = resp.data.userId;
+                        this.registerDone = true;
                     } else
                         this.alert.error(resp.message, this.options);
                 },
                 error: (err) => {
                     // Handle errors here
                     this.alert.error(err.error.message, this.options);
+                    if(err.error.message=='Email already registered')
+                        this.useCustomId = true;
                 },
                 complete: () => {
                     // This block is executed when the observable completes (optional)

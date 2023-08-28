@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class AuthDetail {
 
-	private int userId;
+	private String userId;
 	private int roleId;
 	private String username;
 	private List<String> roles;
@@ -14,10 +14,10 @@ public class AuthDetail {
 	private String email;
 	private Map<Integer, String> moduleMapping;
 	
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public int getRoleId() {

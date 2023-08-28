@@ -17,7 +17,7 @@ export class MsfLogin implements OnInit {
     login: Login;
 
     private options = {
-        autoClose: true,
+        autoClose: false,
         keepAfterRouteChange: false
     };
 

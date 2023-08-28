@@ -2,26 +2,34 @@ package org.msf.beans;
 
 import org.msf.utils.Constants;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(Constants.MSF_Users)
-@CompoundIndex(name="user_index", def="{'id':1, 'email':1}")
+//@CompoundIndex(name="user_index", def="{'id':1, 'email':1}")
 public class User {
 
 	@Id
-	@Field("email")
+	private String id;
+	@Indexed(unique = true)
 	private String email;	//User Id for login
-	private String id;	//Can also use for login
+	private String userId;	//Can also use for login
 	private String firstName;
 	private String lastName;
 	private long mobile;
 	private String dob;
 	private String password;
-	private boolean isActive;
+	private boolean active;
+	private boolean useCustomId;
+	private boolean termsCond;
 	private Address address;
 	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getId() {
 		return id;
 	}
@@ -65,16 +73,28 @@ public class User {
 	public void setDob(String dob) {
 		this.dob = dob;
 	}
-	public boolean isActive() {
-		return isActive;
-	}
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public boolean isUseCustomId() {
+		return useCustomId;
+	}
+	public void setUseCustomId(boolean useCustomId) {
+		this.useCustomId = useCustomId;
+	}
+	public boolean isTermsCond() {
+		return termsCond;
+	}
+	public void setTermsCond(boolean termsCond) {
+		this.termsCond = termsCond;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

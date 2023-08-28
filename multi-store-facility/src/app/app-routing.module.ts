@@ -26,7 +26,6 @@ const routes: Routes = [
             { path: 'home', component:  MsfViewImport.HomeComponent, canActivate:[RouteGuard]},
             { path: 'userDetail', component:  MsfViewImport.UserDetail, canActivate:[RouteGuard]},
             { path: 'userUpdate', component:  MsfViewImport.UserUpdate, canActivate:[RouteGuard]},
-            { path: 'userRegister', component:  MsfViewImport.UserRegister, canActivate:[RouteGuard]},
             { path: 'userNotification', component:  MsfViewImport.UserNotification, canActivate:[RouteGuard]},
             { path: 'resetPassword', component:  MsfViewImport.ResetPassword, canActivate:[RouteGuard]},
             
@@ -34,7 +33,7 @@ const routes: Routes = [
     },
 
     {
-        path: 'public',
+        path: 'msf',
         component: MsfPublicLayout,
         children: [
             { path: '', component:  MsfPublicViewImport.GeneralInfo},

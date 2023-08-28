@@ -6,18 +6,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Document
 public class UserDetail implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	//@Id
-	private int userId;
+	private String userId;
 	private String username;
 	private String password;
 	private String email;
@@ -32,7 +29,7 @@ public class UserDetail implements UserDetails {
 	@Transient
 	private Set<GrantedAuthority> authority;
 	
-public UserDetail() { }
+	public UserDetail() { }
 	
 	public UserDetail(String username, String password, String roles, boolean isEnabled) {
 		this.username = username;
@@ -99,11 +96,11 @@ public UserDetail() { }
 		return isEnabled;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

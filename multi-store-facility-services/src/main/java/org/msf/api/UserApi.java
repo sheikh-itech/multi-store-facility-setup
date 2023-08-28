@@ -2,7 +2,11 @@ package org.msf.api;
 
 import org.msf.beans.User;
 import org.msf.service.UserService;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.msf.beans.Response;
+import org.msf.utils.MsfSecurityUtil;
 import org.msf.utils.ResConstants;
 import org.msf.utils.ValidationUtil;
 import org.slf4j.Logger;
@@ -26,6 +30,8 @@ public class UserApi {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MsfSecurityUtil securityUtil;
 	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -53,10 +59,15 @@ public class UserApi {
 			}
 			
 		} catch(Exception ex) {
-			
+			user.setPassword(null);
 			if(ex instanceof DuplicateKeyException) {
-				res.setMessage("Email already registered");
-				status = HttpStatus.CONFLICT;
+				if(user.isUseCustomId()) {
+					res.setMessage("User already registered");
+					status = HttpStatus.CONFLICT;
+				} else {
+					res.setMessage("Email already registered");
+					status = HttpStatus.CONFLICT;
+				}
 			} else if(ex instanceof MongoWriteException) {
 				res.setMessage("Server refused to add user");
 				status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -66,6 +77,35 @@ public class UserApi {
 				status = HttpStatus.INTERNAL_SERVER_ERROR;
 			}
 			res.setStatus(status);
+		}
+		return new ResponseEntity<Response>(res, status);
+	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	public ResponseEntity<Response> getUser(HttpServletRequest request) {
+		
+		Response res = new Response();
+		HttpStatus status = HttpStatus.OK;
+		try {
+			
+			String username  = securityUtil.getUsername(request);
+			User user = userService.getUserDetail(username);
+			
+			if(user!=null) {
+				
+				status = HttpStatus.OK;
+				
+				res.setSuccess(true);
+				res.setData(user);
+				res.setMessage("User detail found");
+			} else {
+				status = HttpStatus.NOT_FOUND;
+				res.setMessage("User detail not found");
+			}
+			
+		} catch(Exception ex) {
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			res.setMessage("Failed to search user detail");
 		}
 		return new ResponseEntity<Response>(res, status);
 	}

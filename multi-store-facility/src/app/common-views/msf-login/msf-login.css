@@ -45,9 +45,16 @@ button:hover {
     margin-bottom: auto;
 }
 
+.signin {
+    text-align: right;
+}
+.signin a {
+    text-decoration: none;
+}
 .imgcontainer {
     text-align: center;
-    margin: 12px 0;
+    margin-bottom: 12px;
+    margin-top: -20px;
 }
 
 img.avatar {

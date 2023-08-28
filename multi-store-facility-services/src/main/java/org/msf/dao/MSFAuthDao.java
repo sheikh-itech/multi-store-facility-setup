@@ -2,6 +2,7 @@ package org.msf.dao;
 
 import java.util.List;
 
+import org.msf.beans.User;
 import org.msf.beans.UserDetail;
 import org.msf.utils.Constants;
 import org.slf4j.Logger;
@@ -24,14 +25,33 @@ public class MSFAuthDao {
 
 		try {
 			
-			Query query = new Query().addCriteria(Criteria.where("username").is(username));
+			//Query query = new Query().addCriteria(Criteria.where("username").is(username));
+			Query query = new Query().addCriteria(
+				    new Criteria().orOperator(
+				        Criteria.where("email").is(username),
+				        Criteria.where("userId").is(username)
+				    )
+				);
 			
-			List<UserDetail> outcome = mongoTemplate.find(query, UserDetail.class, Constants.MSF_Users);
+			List<User> outcome = mongoTemplate.find(query, User.class, Constants.MSF_Users);
 			
 			if(outcome.size()>1)
 				return null;
-			
-			return outcome.get(0);
+			else {
+				User user = outcome.get(0);
+				
+				UserDetail detail = new UserDetail();
+				detail.setUsername(username);
+				detail.setEnabled(true);
+				detail.setAccountExpired(false);
+				detail.setAccountLocked(false);
+				detail.setCredentialsExpired(false);
+				detail.setEmail(user.getEmail());
+				detail.setPassword(user.getPassword());
+				detail.setUserId(user.getUserId());
+				
+				return detail;
+			}
 
 		} catch (Exception ex) {
 			logger.error("User Detail Not Found, username: "+username+", error: " + ex.getMessage());

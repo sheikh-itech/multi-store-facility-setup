@@ -70,7 +70,10 @@ public class AuthenticationApi {
 			
 		} catch (AuthenticationServiceException ex) { // Internal system exception
 			logger.error("Internal Auth Server Error:: " + login.getUsername());
-			res.setMessage("Internal Auth Server Error");
+			if(ex.getMessage().contains("UserDetailsService returned null"))
+				res.setMessage("User detail not found");
+			else
+				res.setMessage("Server refused to login");
 			res.setStatus(HttpStatus.FORBIDDEN);
 			
 		} catch (RememberMeAuthenticationException ex) {
@@ -80,7 +83,7 @@ public class AuthenticationApi {
 			
 		} catch (Exception ex) {
 			logger.error("Internal Server Error:: " + login.getUsername());
-			res.setMessage("Internal Server Error");
+			res.setMessage("Server refused to login");
 			res.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		

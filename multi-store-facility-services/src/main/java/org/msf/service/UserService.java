@@ -1,5 +1,7 @@
 package org.msf.service;
 
+import java.util.List;
+
 import org.msf.beans.User;
 import org.msf.dao.UserDao;
 import org.msf.utils.AdminUtil;
@@ -19,10 +21,30 @@ public class UserService {
 
 		user.setPassword(encoder.encode(user.getPassword()));
 		
-		String id = AdminUtil.generateId(user.getEmail(), user.getFirstName(), user.getLastName(), user.getDob());
+		if(user.isUseCustomId()) {
+			String id = AdminUtil.generateId(user.getFirstName(), user.getLastName());
+			user.setId(id);
+			user.setUserId(id);
+		} else {
+			user.setId(user.getEmail());
+			user.setUserId("");
+		}
+		user = userDao.persistUser(user);
+		user.setPassword(null);
 		
-		user.setId(id);
+		return user;
+	}
+	
+	public User getUserDetail(String username) {
 		
-		return userDao.persistUser(user);
+		List<User> users = userDao.fetchUserDetail(username);
+		
+		if(users.size()>1)
+			return null;
+		
+		User user = users.get(0);
+		user.setPassword(null);
+		
+		return user;
 	}
 }

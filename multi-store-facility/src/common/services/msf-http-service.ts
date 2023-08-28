@@ -76,8 +76,7 @@ export class MsfHttpService {
   private handleError(error: HttpErrorResponse) {
     this.mask.show(false);
     // Api returned an unsuccessful response
-    if (error.error == 'Incorrect username or password' || error.statusText == 'Unknown Error' 
-      || error.error.error == 'Unauthorized') {
+    if (error.error == 'Incorrect username or password' || error.error.error == 'Unauthorized') {
         
       this.enableLogin();
     } else if (error.status === 0) {

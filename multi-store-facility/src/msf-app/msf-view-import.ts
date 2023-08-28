@@ -12,7 +12,6 @@ import { HomeComponent } from "src/app/common-views/home/home.component";
 import { ResetPassword } from "src/msf-app/user/reset-password/reset-password";
 import { UserDetail } from "src/msf-app/user/user-detail/user-detail";
 import { UserNotification } from "src/msf-app/user/user-notification/user-notification";
-import { UserRegister } from "src/msf-app/user/user-register/user-register";
 import { UserUpdate } from "src/msf-app/user/user-update/user-update";
 import { AngularDefaultPage } from "src/r&d/default-page/angular-default-page";
 import { AccessDenied } from "src/app/common-views/access-denied/access-denied";
@@ -29,7 +28,7 @@ export const MsfViewImport = {
      */
     declarations: [
         MsfLayout, MsfAnimateLayout, MsfHeader, MsfFooter, MsfSidebarOld, MsfSidebar, MsfAnimateSidebar,
-        HomeComponent, UserDetail, UserRegister, UserUpdate, ResetPassword, UserNotification,
+        HomeComponent, UserDetail, UserUpdate, ResetPassword, UserNotification,
         AccessDenied,
         AngularDefaultPage
     ],
@@ -41,7 +40,6 @@ export const MsfViewImport = {
     AngularDefaultPage: AngularDefaultPage,
     HomeComponent: HomeComponent,
     UserDetail: UserDetail,
-    UserRegister: UserRegister,
     UserUpdate: UserUpdate,
     ResetPassword: ResetPassword,
     UserNotification: UserNotification,

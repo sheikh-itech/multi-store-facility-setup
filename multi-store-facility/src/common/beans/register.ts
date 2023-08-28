@@ -8,4 +8,6 @@ export class Register {
     dob: string = '';
     password: string = '';
     termsCond: boolean = false;
+    active: boolean = true;
+    useCustomId: boolean = false;
 }

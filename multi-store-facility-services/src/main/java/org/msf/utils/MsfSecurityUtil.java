@@ -144,10 +144,10 @@ public class MsfSecurityUtil {
 	public String getUsername(HttpServletRequest request) throws UserValidationException {
 		
 		String token = null;
-		final String authorizationHeader = request.getHeader("Authorization");
+		final String authHeader = request.getHeader("Authorization");
 
-		if (authorizationHeader != null && authorizationHeader.startsWith("MSF+"))
-			token = authorizationHeader.substring(7);
+		if (authHeader != null && authHeader.startsWith("MSF+"))
+			token = authHeader.substring(4);
 
 		if (token == null)
 			throw new UserValidationException("Token Not Found");
@@ -158,10 +158,10 @@ public class MsfSecurityUtil {
 	public String getUserId(HttpServletRequest request) throws UserValidationException {
 		
 		String token = null;
-		final String authorizationHeader = request.getHeader("Authorization");
+		final String authHeader = request.getHeader("Authorization");
 
-		if (authorizationHeader != null && authorizationHeader.startsWith("MSF+"))
-			token = authorizationHeader.substring(7);
+		if (authHeader != null && authHeader.startsWith("MSF+"))
+			token = authHeader.substring(4);
 
 		if (token == null)
 			throw new UserValidationException("Token Not Found");

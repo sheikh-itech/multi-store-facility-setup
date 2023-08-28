@@ -16,7 +16,7 @@ public class ValidationUtil {
 			return "Last name not valid";
 		
 		if(String.valueOf(user.getMobile())==null || String.valueOf(user.getMobile()).length()!=10)
-			return "Mobile can have 10 digit";
+			return "Mobile can have only 10 digits";
 		
 		return ResConstants.OK;
 	}

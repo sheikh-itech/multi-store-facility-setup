@@ -3,6 +3,7 @@ export class Alert {
   type?: AlertType;
   message?: string;
   autoClose?: boolean;
+  autoCloseTime?: number = 3000;
   keepAfterRouteChange?: boolean;
   fade?: boolean;
 

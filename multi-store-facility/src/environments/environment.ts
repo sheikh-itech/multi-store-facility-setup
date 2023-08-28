@@ -15,4 +15,5 @@ export const environment = {
 
   //Public Urls
   register: apiPublic + "user/add",
+  userDetail: apiPublic + "user/list",
 }

@@ -17,7 +17,7 @@ export class RouteGuard {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-        if (state.url == '/login') {
+        if (state.url == '/login' || state.url == '/home') {
             this.isInitialized.next(true);
             return true;
         }
