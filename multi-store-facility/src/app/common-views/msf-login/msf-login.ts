@@ -39,7 +39,6 @@ export class MsfLogin implements OnInit {
                         this.router.navigate(['/login']);
                 },
                 error: (err) => {
-                    // Handle errors here
                     this.router.navigate(['/login']);
                 },
                 complete: () => {
@@ -67,8 +66,10 @@ export class MsfLogin implements OnInit {
                         this.alert.error(resp.message, this.options);
                 },
                 error: (err) => {
-                    // Handle errors here
-                    this.alert.error(err.message, this.options);
+                    if(err.message.indexOf('http')>0)
+                        this.alert.error('Multi store facility not responding', this.options);
+                    else
+                        this.alert.error(err.message, this.options);
                 },
                 complete: () => {
                     // This block is executed when the observable completes (optional)
