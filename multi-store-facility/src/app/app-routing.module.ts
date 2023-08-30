@@ -28,7 +28,8 @@ const routes: Routes = [
             { path: 'userUpdate', component:  MsfViewImport.UserUpdate, canActivate:[RouteGuard]},
             { path: 'userNotification', component:  MsfViewImport.UserNotification, canActivate:[RouteGuard]},
             { path: 'resetPassword', component:  MsfViewImport.ResetPassword, canActivate:[RouteGuard]},
-            
+            { path: 'qrGenerate', component:  MsfViewImport.QrCodeGenerate, canActivate:[RouteGuard]},
+            { path: 'category', component:  MsfViewImport.ProductCategory},
         ]
     },
 

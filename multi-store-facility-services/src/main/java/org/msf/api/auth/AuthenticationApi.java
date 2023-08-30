@@ -1,4 +1,4 @@
-package org.msf.api;
+package org.msf.api.auth;
 
 import java.util.Arrays;
 import java.util.HashMap;

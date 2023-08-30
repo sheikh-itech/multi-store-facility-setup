@@ -41,7 +41,7 @@ export class UserRegister {
             return;
         }
 
-        let valResp = Validation.registerValidate(this.user);
+        let valResp = Validation.validRegister(this.user);
 
         if(valResp=='OK') {
 

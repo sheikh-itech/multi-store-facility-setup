@@ -1,4 +1,4 @@
-package org.msf.api;
+package org.msf.api.business;
 
 import org.msf.beans.User;
 import org.msf.service.UserService;

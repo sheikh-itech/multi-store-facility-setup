@@ -1,4 +1,5 @@
 import { Login } from "../beans/login";
+import { Product } from "../beans/product";
 import { Register } from "../beans/register";
 
 export class Validation {
@@ -17,7 +18,7 @@ export class Validation {
         return true;
     }
 
-    public static registerValidate(user: Register): string {
+    public static validRegister(user: Register): string {
 
         if (!user.firstName || user.firstName.length < 1)
             return 'First Name Required';
@@ -30,6 +31,17 @@ export class Validation {
             return 'Password of length 5 required';
         if (!user.dob || user.dob.length < 10)
             return 'Invalid birth date';
+
+        return 'OK';
+    }
+
+    public static validProduct(product: Product):string {
+        
+        if(!product.name || product.name.length<3)
+            return 'Name shoud have 3 alphabet';
+
+            if(!product.price || product.price<=0)
+            return 'Price should be more then 0';
 
         return 'OK';
     }

@@ -53,7 +53,7 @@ public class MSFRequestHandler extends OncePerRequestFilter {
         
         if (authHeader != null && authHeader.startsWith("MSF+")) {
         	
-        	token = authHeader.substring(7);
+        	token = authHeader.substring(4);
             try {
             	username = securityUtil.extractUsername(token);
             } catch (IllegalArgumentException ex) {

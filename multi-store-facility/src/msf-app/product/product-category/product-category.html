@@ -1,0 +1,69 @@
+<div class="signup-form text-select">
+    
+    <div class="header-menu-left" *ngIf="activePanel!='addNew'">
+        <i class="fa fa-long-arrow-left" aria-hidden="true" (click)="activePanel='addNew'"></i>
+    </div>
+
+    <div class="header-menu">
+        <a (click)="activePanel='viewOne'">Search</a>
+        <a (click)="searchAllCategory();">Veiw All</a>
+    </div>
+
+    <form>
+
+        <div *ngIf="activePanel=='addNew'">
+            <h2>Products Category</h2>
+            <p class="hint-text">Category name should be unique</p>
+
+            <app-alert></app-alert>
+
+            <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="category.name" name="name" placeholder="Category Name">
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="category.desc" name="desc" placeholder="description">
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" (click)="AddCategory();" class="btn btn-success btn-lg btn-block">Add New</button>
+            </div>
+        </div>
+
+        <div *ngIf="activePanel=='viewOne'">
+            <h2>Products Category</h2>
+            <p class="hint-text">Search category using Name</p>
+
+            <app-alert></app-alert>
+
+            <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="categoryName" name="categoryName" placeholder="Category Name">
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" (click)="searchCategory();" class="btn btn-success btn-lg btn-block">Search Category</button>
+            </div>
+        </div>
+
+        <div *ngIf="(activePanel=='viewOne' || activePanel=='viewAll') && categoryDetail.length>0">
+            <table>
+                <thead>
+                    <tr style="text-align: center;">
+                        <td colspan="2">
+                            Category Details
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let category of categoryDetail">
+                        <td>{{category.name}}</td>
+                        <td>{{category.desc}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

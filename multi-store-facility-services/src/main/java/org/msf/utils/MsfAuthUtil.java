@@ -17,6 +17,11 @@ public class MsfAuthUtil {
 		permissions.add("/userUpdate");
 		permissions.add("/userRegister");
 		permissions.add("/resetPassword");
+		permissions.add("/qrGenerate");
+		permissions.add("/qrUpdate");
+		permissions.add("/qrSearch");
+		permissions.add("/category");
+		permissions.add("/category");
 	}
 	
 	public boolean checkModulePermission(Map<String, String> userDetail, String moduleCode) {

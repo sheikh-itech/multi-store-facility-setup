@@ -15,7 +15,8 @@ import { UserNotification } from "src/msf-app/user/user-notification/user-notifi
 import { UserUpdate } from "src/msf-app/user/user-update/user-update";
 import { AngularDefaultPage } from "src/r&d/default-page/angular-default-page";
 import { AccessDenied } from "src/app/common-views/access-denied/access-denied";
-
+import { QrCodeGenerate } from "src/msf-app/business/qr-code/qr-code-generate/qr-code-generate";
+import { ProductCategory } from "src/msf-app/product/product-category/product-category";
 
 
 /**
@@ -28,7 +29,9 @@ export const MsfViewImport = {
      */
     declarations: [
         MsfLayout, MsfAnimateLayout, MsfHeader, MsfFooter, MsfSidebarOld, MsfSidebar, MsfAnimateSidebar,
-        HomeComponent, UserDetail, UserUpdate, ResetPassword, UserNotification,
+        HomeComponent, UserDetail, UserUpdate, ResetPassword, UserNotification, 
+        QrCodeGenerate, ProductCategory,
+
         AccessDenied,
         AngularDefaultPage
     ],
@@ -37,6 +40,8 @@ export const MsfViewImport = {
      * All below ro routing reuse purpose
      */
     
+    QrCodeGenerate: QrCodeGenerate,
+    ProductCategory: ProductCategory,
     AngularDefaultPage: AngularDefaultPage,
     HomeComponent: HomeComponent,
     UserDetail: UserDetail,

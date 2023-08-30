@@ -11,5 +11,6 @@ public class Constants {
 	public static final String MSF_Users = "Users";
 	public static final String MSF_Product = "Products";
 	public static final String MSF_Customer = "Customers";
+	public static final String MSF_QRCode = "QRCodes";
 	//public static final String MSF_Address = "Address";
 }

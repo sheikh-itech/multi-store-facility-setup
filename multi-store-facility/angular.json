@@ -30,6 +30,7 @@
               "src/assets/fonts/font-awesome/css/font-awesome.min.css"
             ],
             "scripts": [
+              "src/assets/js/keyboard.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
