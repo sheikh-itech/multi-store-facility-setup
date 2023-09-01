@@ -35,13 +35,15 @@ export class Validation {
         return 'OK';
     }
 
-    public static validProduct(product: Product):string {
-        
-        if(!product.name || product.name.length<3)
+    public static validProduct(product: Product): string {
+
+        if (!product.name || product.name.length < 3)
             return 'Name shoud have 3 alphabet';
 
-            if(!product.price || product.price<=0)
+        if (!product.price || product.price <= 0)
             return 'Price should be more then 0';
+        if (!product.category || product.category.length <= 0)
+            return 'Category not provided';
 
         return 'OK';
     }

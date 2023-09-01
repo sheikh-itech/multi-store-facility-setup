@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routingmodule';
 import { MultiStoreFacility } from './multi-store-facility';
 import { FormsModule } from '@angular/forms';
 import { MsfLogin } from './common-views/msf-login/msf-login';
@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MsfModule } from 'src/msf-app/msf-module';
 import { MsfPublicModule } from 'src/msf-public/msf-public-module';
 import { SharedModule } from './shared.module';
+import { MaterialModule } from './material-module';
 
 @NgModule({
 
@@ -18,7 +19,7 @@ import { SharedModule } from './shared.module';
     ],
     imports: [
         BrowserModule, CommonModule, FormsModule, MsfModule, AppRoutingModule, HttpClientModule,
-        MsfPublicModule, SharedModule
+        MsfPublicModule, SharedModule, MaterialModule
     ],
     providers: [/*RouteChangeService,*/],
     bootstrap: [MultiStoreFacility]

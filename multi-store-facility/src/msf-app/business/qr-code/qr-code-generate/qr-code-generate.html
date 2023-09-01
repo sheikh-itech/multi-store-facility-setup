@@ -16,6 +16,14 @@
                 placeholder="Product Price" required="required">
         </div>
 
+        <div class="form-group" style="font-size: 17px;">
+            <label>Product Category:</label>
+            <select [(ngModel)]="product.category" name="category">
+                <option disabled>Select Categories</option>
+                <option *ngFor="let category of categories">{{category.name}}</option>
+            </select>
+        </div>
+
         <div class="form-group">
             <input type="text" class="form-control" [(ngModel)]="product.desc" name="desc" placeholder="Description"
                 required="required">

@@ -1,0 +1,109 @@
+<div class="signup-form text-select">
+
+    <form>
+
+        <h2>Generate QR Image</h2>
+        <p class="hint-text">Name and Price are required</p>
+
+        <app-alert></app-alert>
+
+        <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="product.name" name="name" placeholder="Product Name"
+                required="required">
+        </div>
+
+        <div class="form-group">
+            <input type="number" class="form-control" [(ngModel)]="product.price" name="price"
+                placeholder="Product Price" required="required">
+        </div>
+
+        <div class="form-group" style="font-size: 17px;">
+            <label>Product Category:</label>
+            <select [(ngModel)]="product.category" name="category">
+                <option disabled>Select Categories</option>
+                <option *ngFor="let category of categories">{{category.name}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="product.desc" name="desc" placeholder="Description"
+                required="required">
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="product.code" name="code" placeholder="Product Code"
+                required="required">
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" (click)="generateQRCode();" class="btn btn-success btn-lg btn-block">Generate</button>
+        </div>
+
+        <!-- Form end....Table Started -->
+
+        <div class="row">
+
+            <div class="col-sm-12 col-xs-12">
+              <div class="card-box table-responsive horizontal-scrollable">
+                
+                <div class="search-record">
+                  Search: &nbsp;&nbsp; <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Parichai" #input>
+                </div>
+                <div class="mat-elevation-z8" id="TABLE">
+                  <table mat-table [dataSource]="dataSource" matSort>
+      
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="Type">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                      <td mat-cell *matCellDef="let row"> {{row.Type}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="Name">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                      <td mat-cell *matCellDef="let row"> {{row.Name}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="Responsibility">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Responsibility </th>
+                      <td mat-cell *matCellDef="let row"> {{row.Responsibility}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="ExpiryDate">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiry Date </th>
+                      <td mat-cell *matCellDef="let row"><div [ngClass]="(row.DaysToExpiry<=0?'red':(row.DaysToExpiry<=10?'orange':''))">{{row.ExpiryDate}} </div> </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="DaysToExpiry">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. of Days to Expiry </th>
+                      <td mat-cell *matCellDef="let row"> {{row.DaysToExpiry}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="ExpiryAlertThreshold">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiry Alert Threshold </th>
+                      <td mat-cell *matCellDef="let row"> {{row.ExpiryAlertThreshold}} </td>
+                    </ng-container>
+      
+                    <ng-container matColumnDef="Remark">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Remark </th>
+                      <td mat-cell *matCellDef="let row"> {{row.Remark}} </td>
+                    </ng-container>
+      
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="4">No matching data-"{{input.value}}"</td>
+                    </tr>
+                  </table>
+      
+                  <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+                </div>
+      
+              </div>
+      
+            </div>
+          </div>
+    </form>
+</div>
+

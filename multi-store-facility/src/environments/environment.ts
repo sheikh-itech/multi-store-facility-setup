@@ -14,6 +14,7 @@ export const environment = {
     qrGenerate: apiBase + "QR/generate",
     qrSearchByName: apiBase + "QR/search/",
     qrSearchByType: apiBase + "QR/search/type/",
+    allQrCode: apiBase + "QR/search/all",
     category: apiBase + "products/category",
     categorySearch: apiBase + "products/category/search/",
     categorySearchAll: apiBase + "products/category/search/all",

@@ -66,3 +66,15 @@ form {
 table, tr, th, td {
     border: 4px white solid;
 }
+select {
+    color: #727272;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+select:focus {
+    border-color: #5cb85c;
+}
+label {
+    margin-right: 15px;
+}
