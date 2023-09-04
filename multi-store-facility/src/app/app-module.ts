@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routingmodule';
+import { AppRoutingModule } from './app-routing-module';
 import { MultiStoreFacility } from './multi-store-facility';
 import { FormsModule } from '@angular/forms';
 import { MsfLogin } from './common-views/msf-login/msf-login';

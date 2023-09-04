@@ -17,6 +17,7 @@ import { AngularDefaultPage } from "src/r&d/default-page/angular-default-page";
 import { AccessDenied } from "src/app/common-views/access-denied/access-denied";
 import { QrCodeGenerate } from "src/msf-app/business/qr-code/qr-code-generate/qr-code-generate";
 import { ProductCategory } from "src/msf-app/product/product-category/product-category";
+import { QrCodeUpdate } from "src/msf-app/business/qr-code/qr-code-update/qr-code-update";
 
 
 /**
@@ -30,7 +31,7 @@ export const MsfViewImport = {
     declarations: [
         MsfLayout, MsfAnimateLayout, MsfHeader, MsfFooter, MsfSidebarOld, MsfSidebar, MsfAnimateSidebar,
         HomeComponent, UserDetail, UserUpdate, ResetPassword, UserNotification, 
-        QrCodeGenerate, ProductCategory,
+        QrCodeGenerate, QrCodeUpdate,ProductCategory,
 
         AccessDenied,
         AngularDefaultPage
@@ -41,6 +42,7 @@ export const MsfViewImport = {
      */
     
     QrCodeGenerate: QrCodeGenerate,
+    QrCodeUpdate: QrCodeUpdate,
     ProductCategory: ProductCategory,
     AngularDefaultPage: AngularDefaultPage,
     HomeComponent: HomeComponent,

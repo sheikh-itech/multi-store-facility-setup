@@ -9,7 +9,8 @@
 .msf-header {
     top: 0;
     height: var(--headerHeight);
-    width: calc(100vw - var(--sidebarWidth));
+    /* width: calc(100vw - var(--sidebarWidth));*/
+    width: -webkit-fill-available;
     --position: fixed;
     background-color: #518480;
     margin-left: var(--sidebarWidth);
@@ -46,7 +47,8 @@
 .msf-content {
     width: auto;
     min-width: -webkit-fill-available;
-    height: calc(100vh - var(--headerHeight));
+    height: fit-content;
+    min-height: calc(100vh - var(--headerHeight));
     margin-left: var(--sidebarWidth);
     background: #eaf2f5;
     padding: 8px;

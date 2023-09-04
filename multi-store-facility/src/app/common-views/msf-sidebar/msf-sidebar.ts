@@ -45,7 +45,8 @@ export class MsfSidebar {
         let ele = event.target.closest("LI") as HTMLElement;
 		if(!ele)
 		    return;
-        if(ele.classList.contains("dummy-link") || ele.classList.contains("home")) {
+        if(ele.classList.contains("dummy-link") || ele.classList.contains("home")
+            || ele.classList.contains('no-guard')) {
             this.startNavigation(event);
             return;
         }

@@ -8,10 +8,12 @@ public class ProductInfo {
 	private float price;
 	private String desc;
 	private String code;
+	private String category;
 	
 	public ProductInfo() {	}
 	
-	public ProductInfo(String id, byte[] qrBytes, String name, float price, String desc, String code) {
+	public ProductInfo(String id, byte[] qrBytes, String name, float price,
+			String desc, String code, String category) {
 		super();
 		this.id = id;
 		this.qrBytes = qrBytes;
@@ -19,6 +21,7 @@ public class ProductInfo {
 		this.price = price;
 		this.desc = desc;
 		this.code = code;
+		this.category = category;
 	}
 	
 	public String getId() {
@@ -56,5 +59,11 @@ public class ProductInfo {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }

@@ -23,6 +23,7 @@ public class ZXingQRCodeDao {
 	@Autowired
 	private MongoTransactionalService mongoTransService;
 	
+	
 	public ProductQRInfo saveQRCode(ProductQRInfo qrInfo) {
 		
 		return mongoTemplate.insert(qrInfo);
@@ -68,15 +69,17 @@ public class ZXingQRCodeDao {
 			return null;
 	}
 	
-	public List<ProductInfo> findALLQRCodeInfo() {
+	public List<ProductInfo> findAllQRCodeInfo() {
 		List<ProductInfo> info = new ArrayList<>();
 		
 		List<Product> products = mongoTemplate.findAll(Product.class, Constants.MSF_Product);
 		products.forEach(prod->{
 			ProductQRInfo qrCodes = mongoTemplate.findById(prod.getId(), 
 					ProductQRInfo.class, Constants.MSF_QRCode);
-			info.add(new ProductInfo(prod.getId(), qrCodes.getQrBytes(), prod.getName(), 
-					prod.getPrice(), prod.getDesc(), prod.getCode()));
+			
+			if(qrCodes!=null)
+				info.add(new ProductInfo(prod.getId(), qrCodes.getQrBytes(), prod.getName(), 
+						prod.getPrice(), prod.getDesc(), prod.getCode(), prod.getCategory()));
 		});
 		return info;
 	}

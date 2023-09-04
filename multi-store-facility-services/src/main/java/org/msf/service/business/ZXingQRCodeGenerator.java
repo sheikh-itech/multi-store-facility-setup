@@ -91,7 +91,7 @@ public class ZXingQRCodeGenerator {
 	
 	public List<ProductInfo> findAllQRCodeInfo() {
 				
-		return qrCodeDao.findALLQRCodeInfo();
+		return qrCodeDao.findAllQRCodeInfo();
 	}
 	
 	private void validateProduct(Product productInfo) throws Exception {

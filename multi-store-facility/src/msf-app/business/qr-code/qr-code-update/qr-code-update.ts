@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AlertService } from 'src/app/common-views/alert/alert-service';
 import { Product } from 'src/common/beans/product';
 import { MsfHttpService } from 'src/common/services/msf-http-service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'qr-code-update',
@@ -19,7 +20,6 @@ export class QrCodeUpdate implements OnInit {
 
     displayedColumns: string[] = ['Name', 'Price', 'Category', 'Desc', 'Id', 'Code'];
     dataSource: MatTableDataSource<UserData>;
-    private response: any;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
@@ -37,9 +37,53 @@ export class QrCodeUpdate implements OnInit {
         this.sort = srt;
     }
 
-    ngOnInit(): void {
+    applyFilter(event: any) {
 
     }
+
+    ngOnInit(): void {
+
+        this.http.getApi(environment.allQrCode).subscribe({
+            next: (resp) => {
+                if (resp.success && resp.status == "OK") {
+
+                    resp.data.forEach((info: any) => {
+                        const byteCharacters = atob(info.qrBytes);
+                        const byteNumbers = new Array(byteCharacters.length);
+                        for (let i = 0; i < byteCharacters.length; i++) {
+                            byteNumbers[i] = byteCharacters.charCodeAt(i);
+                        }
+                        const byteArray = Array.from(byteNumbers);
+                        const base64Image = 'data:image/png;base64,' + btoa(String.fromCharCode.apply(null, byteArray));
+                        info.imageUrl = base64Image;
+                    });
+
+                    const users = Array.from(resp.data, (data) => this.createUser(data));
+                    this.dataSource = new MatTableDataSource(users);
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.sort = this.sort;
+                } else {
+                    this.categories = [];
+                }
+            },
+            error: (err) => {
+                this.categories = [];
+            }
+        });
+    }
+
+    createUser(data: any): UserData {
+
+        return {
+          name: data.name,
+          price: data.price,
+          category: data.category,
+          desc: data.desc,
+          code: data.code,
+          id: data.id,
+          imageUrl: data.imageUrl
+        };
+      }
 }
 
 export class UserData {
@@ -49,6 +93,7 @@ export class UserData {
     category?: string;
     desc?: string;
     code?: string;
+    imageUrl?: any;
 }
 
 export function CustomPaginator() {

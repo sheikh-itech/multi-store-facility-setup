@@ -1,0 +1,123 @@
+form {
+    width: 450px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.form-control {
+    height: 40px;
+    box-shadow: none;
+    color: #969fa4;
+}
+
+.form-control:focus {
+    border-color: #5cb85c;
+}
+
+.signup-form {
+    height: max-content;
+    color: #fff;
+    background: #63738a !important;
+    font-family: 'Roboto', sans-serif;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    font-size: 15px;
+}
+
+.signup-form h2 {
+    color: #636363;
+    position: relative;
+    text-align: center;
+}
+
+.signup-form h2:before,
+.signup-form h2:after {
+    content: "";
+    height: 2px;
+    width: 12%;
+    background: #d4d4d4;
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+}
+
+.signup-form h2:before {
+    left: 0;
+}
+
+.signup-form h2:after {
+    right: 0;
+}
+
+.signup-form .hint-text {
+    color: #999;
+    text-align: center;
+}
+
+.signup-form form {
+    color: #999;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    background: #f2f3f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    padding-top: 5px;
+}
+
+.signup-form .form-group {
+    margin-bottom: 20px;
+}
+
+.signup-form .row div:first-child {
+    padding-right: 10px;
+}
+
+.signup-form .row div:last-child {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+select {
+    color: #727272;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+select:focus {
+    border-color: #5cb85c;
+}
+
+label {
+    margin-right: 15px;
+}
+
+/* Table Styles Start */
+.horizontal-scrollable {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.search-record {
+    float: left;
+    margin-bottom: 10px;
+    margin-top: 30px;
+    margin-left: 10px;
+}
+
+table, tr, th, td {
+    border: 2px solid #6d6868;
+}
+
+.product-detail {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mat-elevation-z8 {
+    background: #9198a3;
+    padding-bottom: 5px;
+}
+
+/* Table Styles End */

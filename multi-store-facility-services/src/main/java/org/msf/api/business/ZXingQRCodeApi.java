@@ -181,21 +181,24 @@ public class ZXingQRCodeApi {
         return responseEntity;
     }
 	
-	@RequestMapping(value = "/download/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/search/all", method = RequestMethod.GET)
     public ResponseEntity<Response> searchAllQrCodeInfo() {
 
         Response response = new Response();
 
         try {
             
-            response.setMessage("All QR code info");
             response.setData(qrCodeGenerator.findAllQRCodeInfo());
             response.setSuccess(true);
+            response.setMessage("All Qr code info");
+            response.setStatus(HttpStatus.OK);
+            
             return new ResponseEntity<Response>(response, HttpStatus.OK);
             
         } catch (Exception ex) {
-        	response.setMessage("QR info search error: "+ex.getMessage());
-        	return new ResponseEntity<Response>(response, HttpStatus.BAD_REQUEST);
+        	response.setMessage("Qr info search error");
+        	response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        	return new ResponseEntity<Response>(response, HttpStatus.OK);
         }
     }
 }
