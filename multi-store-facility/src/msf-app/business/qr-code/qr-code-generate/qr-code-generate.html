@@ -19,7 +19,7 @@
         <div class="form-group" style="font-size: 17px;">
             <label>Product Category:</label>
             <select [(ngModel)]="product.category" name="category">
-                <option disabled>Select Categories</option>
+                <option selected>Select Categories</option>
                 <option *ngFor="let category of categories">{{category.name}}</option>
             </select>
         </div>

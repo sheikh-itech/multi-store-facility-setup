@@ -31,7 +31,7 @@ export class QrCodeUpdate {
     @ViewChild(MatSort, { static: true }) sort: MatSort;
 
     private options = {
-        autoClose: false,
+        autoClose: true,
         autoCloseTime: 4000,
         keepAfterRouteChange: false
     };
@@ -65,7 +65,7 @@ export class QrCodeUpdate {
     updateQrDetail() {
 
         if (!this.product) {
-            this.alert.error('Name & Price required', this.options);
+            this.alert.error('Name, Price & Category required', this.options);
             return;
         }
 
@@ -78,12 +78,16 @@ export class QrCodeUpdate {
 
         let valResp = Validation.validProduct(this.product);
         if (valResp == 'OK') {
+
+            this.product.verified = false;
+            
             this.http.patchApi(environment.qrUpdate, this.product).subscribe({
                 next: (resp) => {
                     if (resp.success && resp.status == "CREATED") {
                         this.product = {};
                         this.alert.success('Qr info updated', this.options);
                         this.updateQrInfo = false;
+                        this.orgProduct.verified = false;
                     } else
                         this.alert.error(resp.message, this.options);
                 },

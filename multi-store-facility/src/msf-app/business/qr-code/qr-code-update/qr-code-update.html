@@ -104,8 +104,9 @@
                                 <i (click)="updateDetail(row)" class="fa fa-pencil-square-o" aria-hidden="true" matTooltip="Update info of {{row.name}}"></i>
                                 
                                 <div class="verified">
-                                    <i *ngIf="row.verified" class="fa fa-check" aria-hidden="true" matTooltip="{{row.name}} is verified"></i>
-                                    <button *ngIf="!row.verified" type="submit" (click)="verifyQrImage(row);" class="btn btn-success btn-lg btn-block" matTooltip="Click to verify {{row.name}}">Verify</button>
+                                    <i class="fa fa-check" aria-hidden="true" [ngClass]="row.verified?'display-block':'display-none-impl'" 
+                                        matTooltip="{{row.name}} is verified"></i>
+                                    <button [ngClass] ="row.verified?'display-none-impl':'display-block'" type="submit" (click)="verifyQrImage(row);" class="btn btn-success btn-lg btn-block" matTooltip="Click to verify {{row.name}}">Verify</button>
                                 </div>
                             </td>
                         </ng-container>
