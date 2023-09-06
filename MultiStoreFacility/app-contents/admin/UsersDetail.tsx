@@ -9,14 +9,18 @@ import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 function UsersDetail({ nav }: any): JSX.Element {
 
+    let options = {
+        timeout: 5000 // Set a timeout of 5 seconds
+    };
+
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
 
     useEffect(() => { listAllUsers();  }, []);
 
     const listAllUsers = () => {
-        debugger
-        HttpService.getApi(ApiUrls.ListObjects)
+        
+        HttpService.getApi(ApiUrls.ListObjects, options)
             .then((res) => {
                 setUsers(res.data);
                 setLoading(false);
@@ -27,7 +31,7 @@ function UsersDetail({ nav }: any): JSX.Element {
     };
 
     const deleteUser = (firstName: any) => {
-        HttpService.deleteApi(ApiUrls.DeleteObjects + '/' + firstName)
+        HttpService.deleteApi(ApiUrls.DeleteObjects + '/' + firstName, options)
             .then((res) => {
                 listAllUsers();
             })

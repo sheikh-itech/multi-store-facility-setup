@@ -35,7 +35,7 @@ const routes: Routes = [
     },
 
     {
-        path: 'msf',
+        path: 'public',
         component: MsfPublicLayout,
         children: [
             { path: '', component:  MsfPublicViewImport.GeneralInfo},

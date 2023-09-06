@@ -10,7 +10,6 @@ function Footer({ nav }: any): JSX.Element {
         nav = useNavigation();
 
     const handleNavigation = (path: any) => {
-        console.log(path)
         nav.navigate(path);
         //nav.navigate(path, { firstName: 'Hapheej', lastName: 'M' });
     };

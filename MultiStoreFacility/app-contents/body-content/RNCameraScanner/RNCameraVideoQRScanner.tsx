@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { Alert } from 'react-native';
 import { Dimensions } from 'react-native';
 import { View, StyleSheet } from 'react-native';
+import { EncDecUtil } from '../../common/utils/EncDecUtil';
 import { RNCamera } from 'react-native-camera';
 
 export default function RNCameraVideoQRScanner({ nav, route }: any): JSX.Element {
@@ -34,8 +35,13 @@ export default function RNCameraVideoQRScanner({ nav, route }: any): JSX.Element
         const itemArray = data.split("##");
 
         const itemObject = itemArray.reduce((obj: any, item: any) => {
+            
             const [key, value] = item.split(":");
-            obj[key] = value;
+            if(encKeyFields.includes(key))
+                obj[key] = EncDecUtil.decrypt(value);
+            else
+                obj[key] = value;
+
             return obj;
         }, {});
 
@@ -113,3 +119,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     }
 });
+
+const encKeyFields = ['name', 'desc', 'code', 'category'];

@@ -6,14 +6,17 @@ import java.util.Map;
 
 import org.msf.beans.Product;
 import org.msf.beans.ProductInfo;
-import org.msf.beans.ProductQRInfo;
-import org.msf.config.MongoTransactionalService;
+import org.msf.beans.QrInfo;
+import org.msf.service.MongoTransactionalService;
 import org.msf.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+
+import com.mongodb.client.result.UpdateResult;
 
 @Repository
 public class ZXingQRCodeDao {
@@ -24,7 +27,7 @@ public class ZXingQRCodeDao {
 	private MongoTransactionalService mongoTransService;
 	
 	
-	public ProductQRInfo saveQRCode(ProductQRInfo qrInfo) {
+	public QrInfo saveQRCode(QrInfo qrInfo) {
 		
 		return mongoTemplate.insert(qrInfo);
 	}
@@ -37,6 +40,11 @@ public class ZXingQRCodeDao {
 	public void saveTransObjects(List<Object> objects) {
 
 		mongoTransService.saveObjects(objects);
+	}
+	
+	public void updateTransObjects(List<Object> objects) {
+
+		mongoTransService.updateObjects(objects);
 	}
 	
 	public void saveTransObjects(List<Object> objects, String collection) {
@@ -54,17 +62,38 @@ public class ZXingQRCodeDao {
 		return mongoTemplate.findById(id, Product.class, Constants.MSF_Product);
 	}
 
-	public ProductQRInfo findQRCodeById(String id) {
+	public QrInfo findQRCodeById(String id) {
 		
-		return mongoTemplate.findById(id, ProductQRInfo.class, Constants.MSF_QRCode);
+		return mongoTemplate.findById(id, QrInfo.class, Constants.MSF_QRCode);
 	}
 	
-	public ProductQRInfo findQRCodeByName(String name) {
+	public UpdateResult verifyQrInfo(String id, boolean verified) {
+		
+		Query query = new Query().addCriteria(Criteria.where("_id").is(id));
+		
+		Update update = new Update();
+		update.set("verified", verified);
+		
+		return mongoTemplate.updateFirst(query, update, Constants.MSF_Product);
+	}
+	
+	public List<ProductInfo> findQRCodeByName(String name) {
+		
+		List<ProductInfo> info = new ArrayList<>();
 		
 		Query query = new Query().addCriteria(Criteria.where("name").is(name));
-		Product product = mongoTemplate.findOne(query, Product.class, Constants.MSF_Product);
-		if(product!=null)
-			return mongoTemplate.findById(product.getId(), ProductQRInfo.class, Constants.MSF_QRCode);
+		List<Product> products = mongoTemplate.find(query, Product.class, Constants.MSF_Product);
+		if(products!=null) {
+			products.forEach(prod->{
+				QrInfo qrCodes = mongoTemplate.findById(prod.getId(), 
+						QrInfo.class, Constants.MSF_QRCode);
+				
+				if(qrCodes!=null)
+					info.add(new ProductInfo(prod.getId(), qrCodes.getQrBytes(), prod.getName(), 
+							prod.getPrice(), prod.getDesc(), prod.getCode(), prod.getCategory(), prod.isVerified()));
+			});
+			return info;
+		}
 		else
 			return null;
 	}
@@ -74,12 +103,12 @@ public class ZXingQRCodeDao {
 		
 		List<Product> products = mongoTemplate.findAll(Product.class, Constants.MSF_Product);
 		products.forEach(prod->{
-			ProductQRInfo qrCodes = mongoTemplate.findById(prod.getId(), 
-					ProductQRInfo.class, Constants.MSF_QRCode);
+			QrInfo qrCodes = mongoTemplate.findById(prod.getId(), 
+					QrInfo.class, Constants.MSF_QRCode);
 			
 			if(qrCodes!=null)
 				info.add(new ProductInfo(prod.getId(), qrCodes.getQrBytes(), prod.getName(), 
-						prod.getPrice(), prod.getDesc(), prod.getCode(), prod.getCategory()));
+						prod.getPrice(), prod.getDesc(), prod.getCode(), prod.getCategory(), prod.isVerified()));
 		});
 		return info;
 	}

@@ -9,7 +9,8 @@ export const setNavigationRef = (ref: NavigationContainerRef<any>) => {
 
 export const navigateTo = <RouteName extends keyof typeof routes>
     (routeName: RouteName | any, params?: any) => {
-    console.log(routeName + '--' + params.firstName);
+    
+    //console.log(routeName + '--' + params.firstName);
     
     if (navigationRef) {
         navigationRef.navigate(routeName, params);

@@ -12,6 +12,8 @@ export const environment = {
     permission: apiBase + "auth/user/permission",
     logout: apiBase + "auth/logout",
     qrGenerate: apiBase + "QR/generate",
+    qrUpdate: apiBase + "QR/update",
+    qrVerify: apiBase + "QR/verify/",
     qrSearchByName: apiBase + "QR/search/",
     qrSearchByType: apiBase + "QR/search/type/",
     allQrCode: apiBase + "QR/search/all",

@@ -50,7 +50,7 @@ export class MsfLogin implements OnInit {
 
     publicInfo(): void {
 
-        this.router.navigate(['/msf']);
+        this.router.navigate(['/public']);
     }
 
     signIn(): void {

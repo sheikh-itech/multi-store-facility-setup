@@ -2,11 +2,12 @@ package org.msf.beans;
 
 import java.io.Serializable;
 
+import org.msf.utils.Constants;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "QRCodes")
-public class ProductQRInfo implements Serializable {
+@Document(collection = Constants.MSF_QRCode)
+public class QrInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -14,9 +15,9 @@ public class ProductQRInfo implements Serializable {
 	private String id;
 	private byte[] qrBytes;
 	
-	public ProductQRInfo() {	}
+	public QrInfo() {	}
 	
-	public ProductQRInfo(String id, byte[] bytes) {
+	public QrInfo(String id, byte[] bytes) {
 		this.id = id;
 		this.qrBytes = bytes;
 	}

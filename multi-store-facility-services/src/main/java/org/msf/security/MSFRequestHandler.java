@@ -42,6 +42,7 @@ public class MSFRequestHandler extends OncePerRequestFilter {
 			return;
 
 		} else if (request.getRequestURI().indexOf("/auth/user") > 0 ||
+				request.getRequestURI().indexOf("/user/validate") > 0 ||
 				request.getRequestURI().indexOf("/public") > 0) {
 			chain.doFilter(request, response);
 			return;

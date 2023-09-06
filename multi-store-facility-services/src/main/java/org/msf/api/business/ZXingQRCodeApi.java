@@ -1,18 +1,11 @@
 package org.msf.api.business;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
-import java.util.Map;
 
 import org.msf.beans.Product;
-import org.msf.beans.ProductQRInfo;
 import org.msf.beans.Response;
 import org.msf.service.business.ZXingQRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +34,7 @@ public class ZXingQRCodeApi {
 			productInfo = qrCodeGenerator.generateQRCode(productInfo);
 			res.setSuccess(true);
 			res.setData(productInfo);
-			res.setMessage("QR Code generated, save Id for future reference");
+			res.setMessage("QR Code generated, save name/id for future reference");
 			status = HttpStatus.CREATED;
 		} catch(Exception ex) {
 			res.setSuccess(false);
@@ -53,132 +46,76 @@ public class ZXingQRCodeApi {
 		return new ResponseEntity<Response>(res, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/search/{name}", method = RequestMethod.POST)
-    public ResponseEntity<InputStreamResource> searchQrByName(@PathVariable("name") String name) {
-
-        ResponseEntity<InputStreamResource> responseEntity;
-
-        try {
-            ProductQRInfo qrCodeInfo = qrCodeGenerator.findQRCodeByName(name);
-
-            if(qrCodeInfo==null)
-            	throw new FileNotFoundException("Requested QR Code not found");
-            
-            byte[] imageBytes = qrCodeInfo.getQrBytes();
-
-            //Create the InputStreamResource from the byte array
-            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(imageBytes));
-
-            //Set the response headers
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", MediaType.IMAGE_PNG_VALUE);
-            headers.add("Content-Disposition", "attachment; filename=\"qrcode.png\"");
-            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-            headers.add("Pragma", "no-cache");
-            headers.add("Expires", "0");
-
-            //Create the ResponseEntity with the image data and headers
-            responseEntity = ResponseEntity.created(null)
-                    .headers(headers)
-                    .contentLength(imageBytes.length)
-                    .contentType(MediaType.IMAGE_PNG)
-                    .body(resource);
-
-        } catch(FileNotFoundException ex) {
-        	responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception ex) {
-            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
-        return responseEntity;
-    }
-	
-	@RequestMapping(value = "/search/category/{name}", method = RequestMethod.POST)
-    public ResponseEntity<InputStreamResource> searchQrByCategory(@PathVariable("name") String name) {
-
-        ResponseEntity<InputStreamResource> responseEntity;
-
-        try {
-            ProductQRInfo qrCodeInfo = qrCodeGenerator.findQRCodeByName(name);
-
-            if(qrCodeInfo==null)
-            	throw new FileNotFoundException("Requested QR Code not found");
-            
-            byte[] imageBytes = qrCodeInfo.getQrBytes();
-
-            //Create the InputStreamResource from the byte array
-            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(imageBytes));
-
-            //Set the response headers
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", MediaType.IMAGE_PNG_VALUE);
-            headers.add("Content-Disposition", "attachment; filename=\"qrcode.png\"");
-            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-            headers.add("Pragma", "no-cache");
-            headers.add("Expires", "0");
-
-            //Create the ResponseEntity with the image data and headers
-            responseEntity = ResponseEntity.created(null)
-                    .headers(headers)
-                    .contentLength(imageBytes.length)
-                    .contentType(MediaType.IMAGE_PNG)
-                    .body(resource);
-
-        } catch(FileNotFoundException ex) {
-        	responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception ex) {
-            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
-        return responseEntity;
-    }
-	
-	@RequestMapping(value = "/download", method = RequestMethod.POST)
-    public ResponseEntity<InputStreamResource> searchQrCode(@RequestBody Map<String, String> payload) {
-
-		String id = payload.get("id");
-		String name = payload.get("name");
+	@RequestMapping(value="/update", method=RequestMethod.PATCH)
+	public ResponseEntity<Response> updateQRCode(@RequestBody Product productInfo) {
 		
-        ResponseEntity<InputStreamResource> responseEntity;
+		Response res = new Response();
+		HttpStatus status = HttpStatus.OK;
+		
+		if(productInfo.getCategory()==null || productInfo.getCategory().isBlank())
+			productInfo.setCategory("General");
+		
+		try {
+			productInfo = qrCodeGenerator.updateQRCode(productInfo);
+			res.setSuccess(true);
+			res.setData(productInfo);
+			res.setMessage("QR Code updated, save name/id for future reference");
+			status = HttpStatus.CREATED;
+		} catch(Exception ex) {
+			res.setSuccess(false);
+			res.setData(productInfo);
+			res.setMessage("Failed to update code: "+ex.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		res.setStatus(status);
+		return new ResponseEntity<Response>(res, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/verify/{id}/{verified}", method=RequestMethod.PATCH)
+	public ResponseEntity<Response> verifyQRCode(@PathVariable("id") String id,
+			@PathVariable("verified") boolean verified) {
+		
+		Response res = new Response();
+		HttpStatus status = HttpStatus.OK;
+		
+		try {
+			
+			if(verified && qrCodeGenerator.verifyQrCode(id, verified)) {
+				res.setSuccess(true);
+				res.setMessage("Qr Code verified");
+				status = HttpStatus.ACCEPTED;
+			} else {
+				res.setMessage("Maybe already verified");
+				status = HttpStatus.CONFLICT;
+			}
+		} catch(Exception ex) {
+			res.setMessage("Failed to verify Qr code: "+ex.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		res.setData(id);
+		res.setStatus(status);
+		return new ResponseEntity<Response>(res, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/search/{name}", method = RequestMethod.GET)
+    public ResponseEntity<Response> searchQrByName(@PathVariable("name") String name) {
+
+		Response response = new Response();
 
         try {
-            ProductQRInfo qrCodeInfo = null;
             
-            if(id!=null && !id.isEmpty())
-            	qrCodeInfo = qrCodeGenerator.findQRCodeById(id);
-            else
-            	qrCodeInfo = qrCodeGenerator.findQRCodeByName(name);
-
-            if(qrCodeInfo==null)
-            	throw new FileNotFoundException("Requested QR Code not found");
+            response.setData(qrCodeGenerator.findQRCodeByName(name));
+            response.setSuccess(true);
+            response.setMessage("Qr code info");
+            response.setStatus(HttpStatus.OK);
             
-            byte[] imageBytes = qrCodeInfo.getQrBytes();
-
-            //Create the InputStreamResource from the byte array
-            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(imageBytes));
-
-            //Set the response headers
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", MediaType.IMAGE_PNG_VALUE);
-            headers.add("Content-Disposition", "attachment; filename=\"qrcode.png\"");
-            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-            headers.add("Pragma", "no-cache");
-            headers.add("Expires", "0");
-
-            //Create the ResponseEntity with the image data and headers
-            responseEntity = ResponseEntity.created(null)
-                    .headers(headers)
-                    .contentLength(imageBytes.length)
-                    .contentType(MediaType.IMAGE_PNG)
-                    .body(resource);
-
-        } catch(FileNotFoundException ex) {
-        	responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return new ResponseEntity<Response>(response, HttpStatus.OK);
+            
         } catch (Exception ex) {
-            responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        	response.setMessage("Qr info search problem");
+        	response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        	return new ResponseEntity<Response>(response, HttpStatus.OK);
         }
-
-        return responseEntity;
     }
 	
 	@RequestMapping(value = "/search/all", method = RequestMethod.GET)

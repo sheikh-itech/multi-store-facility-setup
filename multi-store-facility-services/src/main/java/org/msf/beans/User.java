@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(Constants.MSF_Users)
+@Document(collection = Constants.MSF_Users)
 //@CompoundIndex(name="user_index", def="{'id':1, 'email':1}")
 public class User {
 

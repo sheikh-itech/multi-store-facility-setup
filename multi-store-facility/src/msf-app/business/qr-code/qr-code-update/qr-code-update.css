@@ -15,11 +15,12 @@ form {
 }
 
 .signup-form {
-    height: max-content;
+    min-height: 85vh;
+    height: -webkit-fill-available;
     color: #fff;
     background: #63738a !important;
     font-family: 'Roboto', sans-serif;
-    padding-top: 30px;
+    padding-top: 10px;
     padding-bottom: 10px;
     font-size: 15px;
 }
@@ -97,20 +98,34 @@ label {
     overflow-x: auto;
     white-space: nowrap;
 }
-
 .search-record {
-    float: left;
-    margin-bottom: 10px;
-    margin-top: 30px;
-    margin-left: 10px;
+    margin: 0;
+    padding: 10px 0px !important;
 }
-
-table, tr, th, td {
+.record-filter {
+    display: inline;
+}
+.record-find {
+    display: inline;
+    float: right;
+    padding-right: 0 !important;
+}
+.record-find>input {
+    margin-left: 5px;
+}
+.record-find>button {
+    margin-left: 5px;
+    padding: 0px 5px;
+}
+.mdc-paginator, .mat-mdc-paginator, table, tr, th, td {
     border: 2px solid #6d6868;
 }
 
+th, td {
+    padding: 0;
+    text-align: center;
+}
 .product-detail {
-    width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -119,5 +134,28 @@ table, tr, th, td {
     background: #9198a3;
     padding-bottom: 5px;
 }
-
+.fa-pencil-square-o {
+    cursor: pointer;
+    padding: 5px;
+    font-size: 25px;
+    color: #8989c3;
+}
+.verified {
+    margin-top: 10px;
+}
+.verified > i {
+    font-size: 25px;
+    color: green;
+}
+.verified > button {
+    padding: 0px 5px;
+    font-size: 15px;
+}
+.cancel-btn {
+    color: red;
+    font-size: 25px;
+    margin-right: 20px;
+    vertical-align: middle;
+    cursor: pointer;
+}
 /* Table Styles End */

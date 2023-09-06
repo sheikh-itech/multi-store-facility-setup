@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { StatusBar, useColorScheme } from 'react-native';
@@ -12,10 +12,13 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import NavStack from './app-contents/navigation/NavStack';
 import Header from './app-contents/header/Header';
 import Footer from './app-contents/footer/Footer';
+import Login from './app-contents/login/Login';
 
 function App(): JSX.Element {
 
     enableScreens();
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const isDarkMode = useColorScheme() === 'dark';
 
@@ -37,20 +40,22 @@ function App(): JSX.Element {
 
         <SafeAreaProvider style={backgroundStyle}>
 
-            { /* StatusBar shows Time|Battery-Info|Network-Info etc */ }
+            { /* StatusBar shows Time|Battery-Info|Network-Info etc */}
             <StatusBar
                 barStyle={isDarkMode ? 'light-content' : 'dark-content'}
                 backgroundColor={backgroundStyle.backgroundColor}
             />
 
             <NavigationContainer>
-
-                <Header />
-
-                <NavStack />
-
-                <Footer />
-
+                {isLoggedIn ? (
+                    <>
+                        <Header />
+                        <NavStack />
+                        <Footer />
+                    </>
+                ) : (
+                    <Login setIsLoggedIn={setIsLoggedIn} />
+                )}
             </NavigationContainer>
 
         </SafeAreaProvider>

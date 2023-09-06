@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 import org.msf.beans.Product;
 import org.msf.beans.ProductInfo;
-import org.msf.beans.ProductQRInfo;
+import org.msf.beans.QrInfo;
 import org.msf.dao.business.ZXingQRCodeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +22,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.mongodb.client.result.UpdateResult;
 
 @Service
 public class ZXingQRCodeGenerator {
@@ -50,8 +51,28 @@ public class ZXingQRCodeGenerator {
         //Map<Object, String> docInfo = new HashMap<>();
         List<Object> docList = new ArrayList<>();
         docList.add(productInfo);
-        docList.add(new ProductQRInfo(productInfo.getId(), imageBytes));
+        docList.add(new QrInfo(productInfo.getId(), imageBytes));
         qrCodeDao.saveTransObjects(docList);
+        
+        return productInfo;
+	}
+	
+	public Product updateQRCode(Product productInfo) throws Exception {
+		
+		validateProduct(productInfo);
+		
+		BufferedImage image =  generateZXingQRCode(productInfo.toString());
+		
+		//Convert/Write the image to a byte array
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", baos);
+        byte[] imageBytes = baos.toByteArray();
+        
+        //Map<Object, String> docInfo = new HashMap<>();
+        List<Object> docList = new ArrayList<>();
+        docList.add(productInfo);
+        docList.add(new QrInfo(productInfo.getId(), imageBytes));
+        qrCodeDao.updateTransObjects(docList);
         
         return productInfo;
 	}
@@ -73,7 +94,17 @@ public class ZXingQRCodeGenerator {
 	    return MatrixToImageWriter.toBufferedImage(bitMatrix);
 	}
 	
-	public ProductQRInfo findQRCodeById(String id) {
+	public boolean verifyQrCode(String id, boolean verified) {
+		
+		UpdateResult outcome = qrCodeDao.verifyQrInfo(id, verified);
+		
+		if(outcome.getModifiedCount()>0)
+			return true;
+		
+		return false;
+	}
+	
+	public QrInfo findQRCodeById(String id) {
 		
 		if(id==null || id.length()<10)
 			return null;
@@ -81,7 +112,7 @@ public class ZXingQRCodeGenerator {
 		return qrCodeDao.findQRCodeById(id);
 	}
 	
-	public ProductQRInfo findQRCodeByName(String name) {
+	public List<ProductInfo> findQRCodeByName(String name) {
 		
 		if(name==null || name.isEmpty())
 			return null;

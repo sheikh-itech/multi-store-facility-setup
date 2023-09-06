@@ -64,7 +64,15 @@ react-native-safe-area-context: handle safe areas in app
 15. Realm Database
 	>npm install realm
 
+16. Encoding/Decoding [Base 64]
+	>npm i react-native-base64 --save
+	>npm i --save-dev @types/react-native-base64
+	>npm install --save text-encoding
+	>npm install --save @types/text-encoding
 
+17. App Storage [Like Local Storage]
+	>npm i @react-native-async-storage/async-storage --save
+	>npm i react-native-keychain --save
 
 NPX Tools
 =========

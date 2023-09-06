@@ -12,7 +12,8 @@ form {
     border-color: #5cb85c;
 }
 .signup-form {
-    height: 100%;
+    min-height: 85vh;
+    height: -webkit-fill-available;
     color: #fff;
     background: #63738a !important;
     font-family: 'Roboto', sans-serif;

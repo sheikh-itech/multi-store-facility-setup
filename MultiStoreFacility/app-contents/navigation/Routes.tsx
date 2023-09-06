@@ -8,12 +8,14 @@ import MSFItemsCart from '../body-content/cart/MSFItemsCart';
 import RNCameraMSFItemsCart from '../body-content/cart/RNCameraMSFItemsCart';
 import RNCameraImageQRScanner from '../body-content/RNCameraScanner/RNCameraImageQRScanner';
 import RNCameraVideoQRScanner from '../body-content/RNCameraScanner/RNCameraVideoQRScanner';
+import Login from '../login/Login';
 
 /*  Add route defination for all components/views here
     keep headerShown 'true' to Show the navigation bar
 */
 
 export const routes = [
+    { name: 'Login', ele: Login, options: { headerShown: false } },
     { name: 'Home', ele: Home, options: { headerShown: true } },
     { name: 'Profile', ele: Profile, options: { headerShown: false } },
     { name: 'UpdateProfile', ele: UpdateProfile, options: { headerShown: false } },

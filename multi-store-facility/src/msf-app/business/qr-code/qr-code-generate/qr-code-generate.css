@@ -12,12 +12,13 @@ form {
     border-color: #5cb85c;
 }
 .signup-form {
-    height: 100%;
     color: #fff;
     background: #63738a !important;
     font-family: 'Roboto', sans-serif;
     padding-top: 30px;
     font-size: 15px;
+    min-height: 85vh;
+    height: -webkit-fill-available;
 }
 .signup-form h2 {
     color: #636363;
