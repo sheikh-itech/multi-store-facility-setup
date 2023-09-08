@@ -90,7 +90,7 @@ public class ZXingQRCodeDao {
 				
 				if(qrCodes!=null)
 					info.add(new ProductInfo(prod.getId(), qrCodes.getQrBytes(), prod.getName(), 
-							prod.getPrice(), prod.getDesc(), prod.getCode(), prod.getCategory(), prod.isVerified()));
+							prod.getPrice(), prod.getDesc(), prod.getCategory(), prod.getDetail(), prod.isVerified()));
 			});
 			return info;
 		}
@@ -108,7 +108,7 @@ public class ZXingQRCodeDao {
 			
 			if(qrCodes!=null)
 				info.add(new ProductInfo(prod.getId(), qrCodes.getQrBytes(), prod.getName(), 
-						prod.getPrice(), prod.getDesc(), prod.getCode(), prod.getCategory(), prod.isVerified()));
+						prod.getPrice(), prod.getDesc(), prod.getCategory(), prod.getDetail(), prod.isVerified()));
 		});
 		return info;
 	}

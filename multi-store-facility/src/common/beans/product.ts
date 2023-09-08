@@ -1,9 +1,10 @@
+import { ProductDetail } from "./product-detail";
 
 export class Product {
     name?: string;
     price?: number;
     desc?: string = "";
-    code?: string = "";
     category?: string;
     verified?: boolean = false;
+    detail=  new ProductDetail();
 }

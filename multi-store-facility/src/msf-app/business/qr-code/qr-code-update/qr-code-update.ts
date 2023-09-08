@@ -4,8 +4,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { take } from 'rxjs';
 import { AlertService } from 'src/app/common-views/alert/alert-service';
+import { Category } from 'src/common/beans/category';
 import { Product } from 'src/common/beans/product';
 import { MsfHttpService } from 'src/common/services/msf-http-service';
+import { AppConstants } from 'src/common/utilities/app-constants';
 import { EncDecUtil } from 'src/common/utilities/enc-dec-util';
 import { Utility } from 'src/common/utilities/utility';
 import { Validation } from 'src/common/utilities/validation';
@@ -22,10 +24,13 @@ export class QrCodeUpdate {
     updateQrInfo: boolean = false;
     product: Product;
     orgProduct: any;
-    categories: any = [];
+    categories: Category[];
     qrName: any;
 
-    displayedColumns: string[] = ['Name', 'Price', 'Category', 'Desc', 'Id', 'Code', 'Update'];
+    productDietType = AppConstants.productDietType;
+    weightUnits = AppConstants.weightUnits;
+
+    displayedColumns: string[] = ['Name', 'Price', 'Category', 'Desc', 'Info', 'Id', 'Code', 'Update'];
     dataSource: MatTableDataSource<UserData>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -38,6 +43,8 @@ export class QrCodeUpdate {
 
     constructor(private alert: AlertService, private http: MsfHttpService, private qrRead: ZXingQrImageReader,
         private pagin: MatPaginator, private srt: MatSort) {
+
+        this.categories = [];
         this.product = new Product();
         this.dataSource = new MatTableDataSource<UserData>();
         this.paginator = pagin;
@@ -50,15 +57,15 @@ export class QrCodeUpdate {
 
     searchQrByName(): void {
 
-        if(!this.qrName) {
+        if (!this.qrName) {
             this.alert.warn('Product name needed', this.options);
             return;
         }
-        this.searchQrCodes(environment.qrSearchByName+this.qrName);
+        this.searchQrCodes(environment.qrSearchByName + this.qrName);
     }
 
     searchAllQr(): void {
-        
+
         this.searchQrCodes(environment.allQrCode);
     }
 
@@ -80,11 +87,11 @@ export class QrCodeUpdate {
         if (valResp == 'OK') {
 
             this.product.verified = false;
-            
+
             this.http.patchApi(environment.qrUpdate, this.product).subscribe({
                 next: (resp) => {
                     if (resp.success && resp.status == "CREATED") {
-                        this.product = {};
+                        this.product = new Product();
                         this.alert.success('Qr info updated', this.options);
                         this.updateQrInfo = false;
                         this.orgProduct.verified = false;
@@ -101,7 +108,7 @@ export class QrCodeUpdate {
 
     verifyQrImage(product: any): void {
 
-        if(product.verified)
+        if (product.verified)
             return;
 
         this.qrRead.readQrImage(product.imageUrl)
@@ -119,7 +126,7 @@ export class QrCodeUpdate {
                         if (data.key === 'price') {
                             if (product[data.key].toString().indexOf('.') < 0 && (data.value != product[data.key])) {
                                 let trail = product[data.key].toString().substr(product[data.key].toString().indexOf('.'));
-                                if(product[data.key].toString() != product[data.key]+trail)
+                                if (product[data.key].toString() != product[data.key] + trail)
                                     allInfoValid = false;
                             }
                             else if (data.value != product[data.key])
@@ -189,7 +196,7 @@ export class QrCodeUpdate {
     }
 
     private searchQrCodes(url: string, options?: any): void {
-        
+
         this.http.getApi(url, options).subscribe({
             next: (resp) => {
                 if (resp.success && resp.status == "OK") {
@@ -214,7 +221,7 @@ export class QrCodeUpdate {
             price: data.price,
             category: data.category,
             desc: data.desc,
-            code: data.code,
+            detail: data.detail,
             id: data.id,
             verified: data.verified,
             imageUrl: EncDecUtil.bytesToBase64ImageConvert(data.qrBytes)
@@ -228,7 +235,7 @@ export class UserData {
     price?: number;
     category?: string;
     desc?: string;
-    code?: string;
+    detail?: any;
     update?: boolean;
     imageUrl?: any;
     verified?: boolean;

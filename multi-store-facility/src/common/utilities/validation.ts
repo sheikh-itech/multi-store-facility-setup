@@ -45,6 +45,25 @@ export class Validation {
         if (!product.category || product.category.length <= 0)
             return 'Category not provided';
 
+        if (!product.detail.brand || product.detail.brand.length < 2)
+            return 'Product brand required';
+
+        if (!product.detail.dietType)
+            return 'Product diet type required';
+
+        if (!product.detail.weight && !product.detail.weightUnit)
+            return 'Product weight and unit required';
+
+        if (product.detail.info) {
+            let infos = product.detail.info.toString().split(',');
+            product.detail.info = [];
+            infos.forEach(info => {
+                info = info.replaceAll('\n', ' ').trim();
+                info = info.replaceAll('\\', ' ').trim();
+                product.detail.info?.push(info);
+            })
+        }
+
         return 'OK';
     }
 }

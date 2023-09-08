@@ -2,7 +2,7 @@
     <form>
 
         <h2>Generate QR Image</h2>
-        <p class="hint-text">Name and Price are required</p>
+        <p class="hint-text">Name, Price & Category required</p>
 
         <app-alert></app-alert>
 
@@ -29,9 +29,48 @@
                 required="required">
         </div>
 
+        <h3>Additional Detail</h3>
+
         <div class="form-group">
-            <input type="text" class="form-control" [(ngModel)]="product.code" name="code" placeholder="Product Code"
-                required="required">
+            <input type="text" class="form-control" [(ngModel)]="product.detail.brand" name="brand" 
+                placeholder="Brand name" required="required">
+        </div>
+
+        <div class="form-group" style="font-size: 17px;">
+            <label>Product Diet Type:</label>
+            <select [(ngModel)]="product.detail.dietType" name="category">
+                <option disabled selected="true">Select Diet Type</option>
+                <option *ngFor="let type of productDietType">{{type}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="product.detail.color" name="color" 
+            placeholder="Product color" required="required">
+        </div>
+
+        <div class="form-group weight">
+            <input type="number" class="form-control" [(ngModel)]="product.detail.weight" name="weight" 
+                placeholder="Product weight"required="required">
+            
+            <select [(ngModel)]="product.detail.weightUnit" name="category">
+                <option disabled selected="true">Select Weight Type</option>
+                <option *ngFor="let units of weightUnits |keyvalue" value="{{units.value}}">{{units.key}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" [(ngModel)]="product.detail.dimention" name="dimention" 
+                placeholder="Product dimentions" required="required">
+        </div>
+
+        <div class="form-group">
+            <textarea class="form-control" [(ngModel)]="product.detail.info" name="info" placeholder="New line considered after , [comma]"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="formFile" class="form-label">Product Image</label>
+            <input class="form-control" id="formFile" (change)="selectedFile($event);" type="file">
         </div>
 
         <div class="form-group text-center">

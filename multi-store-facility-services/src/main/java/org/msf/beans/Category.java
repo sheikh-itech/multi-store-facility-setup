@@ -1,6 +1,8 @@
 package org.msf.beans;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.UUID;
 
 import org.msf.utils.Constants;
 import org.springframework.data.annotation.Id;
@@ -16,6 +18,11 @@ public class Category implements Serializable {
 	private String id;
 	private String name;
 	private String desc;
+	private List<String> items;
+	
+	public Category() {
+		this.id = UUID.randomUUID().toString().replaceAll("-", "");
+	}
 	
 	public String getDesc() {
 		return desc;
@@ -35,5 +42,11 @@ public class Category implements Serializable {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public List<String> getItems() {
+		return items;
+	}
+	public void setItems(List<String> items) {
+		this.items = items;
 	}
 }

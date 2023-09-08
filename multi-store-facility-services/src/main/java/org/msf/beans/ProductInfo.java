@@ -7,22 +7,22 @@ public class ProductInfo {
 	private String name;
 	private float price;
 	private String desc;
-	private String code;
 	private String category;
+	private ProductDetail detail;
 	private boolean verified;
 	
 	public ProductInfo() {	}
 	
 	public ProductInfo(String id, byte[] qrBytes, String name, float price,
-			String desc, String code, String category, boolean verified) {
+			String desc, String category, ProductDetail detail, boolean verified) {
 		super();
 		this.id = id;
 		this.qrBytes = qrBytes;
 		this.name = name;
 		this.price = price;
 		this.desc = desc;
-		this.code = code;
 		this.category = category;
+		this.detail = detail;
 		this.verified = verified;
 	}
 	
@@ -56,12 +56,6 @@ public class ProductInfo {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
 	public String getCategory() {
 		return category;
 	}
@@ -73,5 +67,11 @@ public class ProductInfo {
 	}
 	public void setVerified(boolean verified) {
 		this.verified = verified;
+	}
+	public ProductDetail getDetail() {
+		return detail;
+	}
+	public void setDetail(ProductDetail detail) {
+		this.detail = detail;
 	}
 }

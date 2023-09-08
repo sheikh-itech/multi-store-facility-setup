@@ -21,9 +21,10 @@ public class Product implements Serializable {
 	private String name;
 	private float price;
 	private String desc;
-	private String code;
 	private String category;
 	private boolean verified;
+	
+	private ProductDetail detail;
 	
 	public Product() {	
 		this.id = UUID.randomUUID().toString().replaceAll("-", "");
@@ -47,17 +48,11 @@ public class Product implements Serializable {
 	public void setDesc(String desc) {
 		this.desc = StringUtils.capitalize(desc);
 	}
-	public String getCode() {
-		return code;
-	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public void setCode(String code) {
-		this.code = StringUtils.capitalize(code);
 	}
 	public String getCategory() {
 		return category;
@@ -72,9 +67,15 @@ public class Product implements Serializable {
 		this.verified = verified;
 	}
 
+	public ProductDetail getDetail() {
+		return detail;
+	}
+	public void setDetail(ProductDetail detail) {
+		this.detail = detail;
+	}
+
 	public String toString() {
 		return "id:" + id + "##name:" + Base64EncDec.encrypt(name) + "##price:" + price + 
-			"##desc:" + Base64EncDec.encrypt(desc) + "##category:" + Base64EncDec.encrypt(category)
-			+ "##code:" + Base64EncDec.encrypt(code);
+			"##desc:" + Base64EncDec.encrypt(desc) + "##category:" + Base64EncDec.encrypt(category);
 	}
 }

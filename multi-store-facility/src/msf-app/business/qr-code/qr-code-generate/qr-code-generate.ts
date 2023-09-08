@@ -2,7 +2,10 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/common-views/alert/alert-service';
 import { Category } from 'src/common/beans/category';
 import { Product } from 'src/common/beans/product';
+import { ProductDetail } from 'src/common/beans/product-detail';
 import { MsfHttpService } from 'src/common/services/msf-http-service';
+import { AppConstants } from 'src/common/utilities/app-constants';
+import { Utility } from 'src/common/utilities/utility';
 import { Validation } from 'src/common/utilities/validation';
 import { environment } from 'src/environments/environment';
 
@@ -16,8 +19,11 @@ export class QrCodeGenerate implements OnInit {
     product: Product;
     generated: boolean = false;
     qrDetail: any;
-    categories: any = [];
-
+    categories: Category[];
+    productDietType = AppConstants.productDietType;
+    weightUnits = AppConstants.weightUnits;
+    private productFile: File | any = '';
+    
     private options = {
         autoClose: true,
         autoCloseTime: 4000,
@@ -26,6 +32,8 @@ export class QrCodeGenerate implements OnInit {
 
     constructor(private alert: AlertService, private http: MsfHttpService) {
         this.product = new Product();
+        this.product.detail = new ProductDetail();
+        this.categories = [];
     }
 
     generateQRCode(): void {
@@ -54,6 +62,17 @@ export class QrCodeGenerate implements OnInit {
             });
         } else
             this.alert.error(valResp, this.options);
+    }
+
+    selectedFile(event: any) {
+
+        let temp = event.target.files.item(0);
+        if(!temp.name.endsWith('.jpg') || !temp.name.endsWith('.jpeg')) {
+            Utility.scrollTop();
+            this.alert.warn('Only jpg or jpeg images allowed', this.options);
+            return;
+        }
+        this.productFile = event.target.files.item(0);
     }
 
     ngOnInit(): void {
