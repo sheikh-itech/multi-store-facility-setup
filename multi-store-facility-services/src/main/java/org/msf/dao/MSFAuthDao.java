@@ -48,7 +48,7 @@ public class MSFAuthDao {
 				detail.setCredentialsExpired(false);
 				detail.setEmail(user.getEmail());
 				detail.setPassword(user.getPassword());
-				detail.setUserId(user.getUserId());
+				detail.setUserId(user.getId());
 				
 				return detail;
 			}

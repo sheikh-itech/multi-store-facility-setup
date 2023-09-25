@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -31,13 +32,16 @@ public class ZXingQRCodeGenerator {
 	
 	@Autowired
 	private ZXingQRCodeDao qrCodeDao;
+	@Autowired
+	private FileStorageService storageService;
+	
 	private QRCodeWriter qrWriter;
 	@Value("${qrImageWidth:200}")
 	private short imageWidth;
 	@Value("${qrimageHeight:200}")
 	private short imageHeight;
 	
-	public Product generateQRCode(Product productInfo) throws Exception {
+	public Product generateQRCode(Product productInfo, String userId, MultipartFile file) throws Exception {
 		
 		validateProduct(productInfo);
 		
@@ -48,11 +52,15 @@ public class ZXingQRCodeGenerator {
         ImageIO.write(image, "png", baos);
         byte[] imageBytes = baos.toByteArray();
         
+        productInfo.getDetail().setImageName(file.getOriginalFilename());
         //Map<Object, String> docInfo = new HashMap<>();
         List<Object> docList = new ArrayList<>();
         docList.add(productInfo);
         docList.add(new QrInfo(productInfo.getId(), imageBytes));
         qrCodeDao.saveTransObjects(docList);
+        
+        if(!storageService.doesFileExist(userId, file.getOriginalFilename()))
+        	storageService.uploadFile(userId, file);
         
         return productInfo;
 	}
@@ -120,9 +128,15 @@ public class ZXingQRCodeGenerator {
 		return qrCodeDao.findQRCodeByName(name);
 	}
 	
-	public List<ProductInfo> findAllQRCodeInfo() {
-				
-		return qrCodeDao.findAllQRCodeInfo();
+	public List<ProductInfo> findAllQRCodeInfo(String clientDirPath) {
+		
+		List<ProductInfo> products = qrCodeDao.findAllQRCodeInfo();
+		for(ProductInfo product : products) {
+			byte[] imageBytes = storageService.downloadFile(clientDirPath, product.getDetail().getImageName());
+			product.setImageBytes(imageBytes);
+			product.setImageDir(clientDirPath+"/"+product.getDetail().getImageName());
+		}
+		return products;
 	}
 	
 	private void validateProduct(Product productInfo) throws Exception {

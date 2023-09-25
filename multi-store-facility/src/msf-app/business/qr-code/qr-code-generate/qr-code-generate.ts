@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/common-views/alert/alert-service';
 import { Category } from 'src/common/beans/category';
 import { Product } from 'src/common/beans/product';
@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 })
 export class QrCodeGenerate implements OnInit {
 
-    product: Product;
+    product: Product | any;
     generated: boolean = false;
     qrDetail: any;
     categories: Category[];
@@ -29,6 +29,7 @@ export class QrCodeGenerate implements OnInit {
         autoCloseTime: 4000,
         keepAfterRouteChange: false
     };
+    headerOptions = { headers: { browserDecidedReqHeader: 'Yes' } };
 
     constructor(private alert: AlertService, private http: MsfHttpService) {
         this.product = new Product();
@@ -45,8 +46,10 @@ export class QrCodeGenerate implements OnInit {
 
         let valResp = Validation.validProduct(this.product);
         if (valResp == 'OK') {
-
-            this.http.postApi(environment.qrGenerate, this.product).subscribe({
+            let data = new FormData();
+            data.set("productDetail", JSON.stringify(this.product));
+            data.set("productImage", this.productFile);
+            this.http.postApi(environment.qrGenerate, data, this.headerOptions).subscribe({
                 next: (resp) => {
                     if (resp.success && resp.status == "CREATED") {
                         this.generated = true;
@@ -67,7 +70,7 @@ export class QrCodeGenerate implements OnInit {
     selectedFile(event: any) {
 
         let temp = event.target.files.item(0);
-        if(!temp.name.endsWith('.jpg') || !temp.name.endsWith('.jpeg')) {
+        if(!temp.name.endsWith('.jpg') && !temp.name.endsWith('.jpeg')) {
             Utility.scrollTop();
             this.alert.warn('Only jpg or jpeg images allowed', this.options);
             return;

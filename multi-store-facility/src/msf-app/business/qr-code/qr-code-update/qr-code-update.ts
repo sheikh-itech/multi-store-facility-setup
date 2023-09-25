@@ -30,7 +30,7 @@ export class QrCodeUpdate {
     productDietType = AppConstants.productDietType;
     weightUnits = AppConstants.weightUnits;
 
-    displayedColumns: string[] = ['Name', 'Price', 'Category', 'Desc', 'Info', 'Id', 'Code', 'Update'];
+    displayedColumns: string[] = ['Name', 'Price', 'Category', 'Desc', 'Info', 'Id', 'Image', 'Code', 'Update'];
     dataSource: MatTableDataSource<UserData>;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -111,7 +111,7 @@ export class QrCodeUpdate {
         if (product.verified)
             return;
 
-        this.qrRead.readQrImage(product.imageUrl)
+        this.qrRead.readQrImage(product.qrImageUrl)
             .pipe(take(1))
             .subscribe({
                 next: (resp) => {
@@ -216,7 +216,7 @@ export class QrCodeUpdate {
 
     createUser(data: any): UserData {
 
-        return {
+        let userData =  {
             name: data.name,
             price: data.price,
             category: data.category,
@@ -224,8 +224,29 @@ export class QrCodeUpdate {
             detail: data.detail,
             id: data.id,
             verified: data.verified,
-            imageUrl: EncDecUtil.bytesToBase64ImageConvert(data.qrBytes)
+            qrImageUrl: EncDecUtil.bytesToBase64ImageConvert(data.qrBytes),
+            imageUrl: null
         };
+        if(data.imageBytes!=null)
+            this.loadProductImage(data.imageDir, userData);
+
+        return userData;
+    }
+
+    private loadProductImage(imageDir: string, userData: any) {
+        this.http.postApi(environment.productImage, imageDir, { responseType: 'arraybuffer' }).subscribe({
+            next: (data) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    userData.imageUrl = reader.result as string;
+                };
+                reader.readAsDataURL(new Blob([data]));
+            },
+            error: (err) => {
+                let imageName = imageDir.substring(imageDir.indexOf('/')+1);
+                this.alert.error('Failed to load image: '+imageName, this.options);
+            }
+        });
     }
 }
 
@@ -237,6 +258,7 @@ export class UserData {
     desc?: string;
     detail?: any;
     update?: boolean;
+    qrImageUrl?: any;
     imageUrl?: any;
     verified?: boolean;
 }
