@@ -29,6 +29,8 @@ public class FileStorageService {
 			if(!new File(baseFileDir).isDirectory())
 				new File(baseFileDir).mkdirs();
 			
+			clientDirPath = clientDirPath.toUpperCase();
+			
 			if(!new File(baseFileDir+File.separator+clientDirPath).isDirectory())
 				new File(baseFileDir+File.separator+clientDirPath).mkdir();
 			

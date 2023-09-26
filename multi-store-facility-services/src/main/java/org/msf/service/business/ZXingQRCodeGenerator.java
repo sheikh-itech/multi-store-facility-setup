@@ -8,8 +8,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import org.msf.beans.Product;
-import org.msf.beans.ProductInfo;
 import org.msf.beans.QrInfo;
+import org.msf.dao.business.TransactionalObjectsDao;
 import org.msf.dao.business.ZXingQRCodeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +34,8 @@ public class ZXingQRCodeGenerator {
 	private ZXingQRCodeDao qrCodeDao;
 	@Autowired
 	private FileStorageService storageService;
+	@Autowired
+	private TransactionalObjectsDao transObjectsDao;
 	
 	private QRCodeWriter qrWriter;
 	@Value("${qrImageWidth:200}")
@@ -52,12 +54,12 @@ public class ZXingQRCodeGenerator {
         ImageIO.write(image, "png", baos);
         byte[] imageBytes = baos.toByteArray();
         
-        productInfo.getDetail().setImageName(file.getOriginalFilename());
+        productInfo.getDetail().setImagePath(userId.toUpperCase()+"/"+file.getOriginalFilename());
         //Map<Object, String> docInfo = new HashMap<>();
         List<Object> docList = new ArrayList<>();
         docList.add(productInfo);
         docList.add(new QrInfo(productInfo.getId(), imageBytes));
-        qrCodeDao.saveTransObjects(docList);
+        transObjectsDao.saveTransObjects(docList);
         
         if(!storageService.doesFileExist(userId, file.getOriginalFilename()))
         	storageService.uploadFile(userId, file);
@@ -80,7 +82,7 @@ public class ZXingQRCodeGenerator {
         List<Object> docList = new ArrayList<>();
         docList.add(productInfo);
         docList.add(new QrInfo(productInfo.getId(), imageBytes));
-        qrCodeDao.updateTransObjects(docList);
+        transObjectsDao.updateTransObjects(docList);
         
         return productInfo;
 	}
@@ -118,25 +120,6 @@ public class ZXingQRCodeGenerator {
 			return null;
 		
 		return qrCodeDao.findQRCodeById(id);
-	}
-	
-	public List<ProductInfo> findQRCodeByName(String name) {
-		
-		if(name==null || name.isEmpty())
-			return null;
-		
-		return qrCodeDao.findQRCodeByName(name);
-	}
-	
-	public List<ProductInfo> findAllQRCodeInfo(String clientDirPath) {
-		
-		List<ProductInfo> products = qrCodeDao.findAllQRCodeInfo();
-		for(ProductInfo product : products) {
-			byte[] imageBytes = storageService.downloadFile(clientDirPath, product.getDetail().getImageName());
-			product.setImageBytes(imageBytes);
-			product.setImageDir(clientDirPath+"/"+product.getDetail().getImageName());
-		}
-		return products;
 	}
 	
 	private void validateProduct(Product productInfo) throws Exception {

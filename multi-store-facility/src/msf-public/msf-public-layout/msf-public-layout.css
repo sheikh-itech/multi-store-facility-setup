@@ -44,17 +44,18 @@
 
 /* Msf Main Content Start */
 .msf-content {
-    width: auto;
     min-width: -webkit-fill-available;
-    height: 100%;
+    width: auto;
+    min-height: calc(100vh - var(--headerHeight));
+    height: fit-content;
     margin-left: var(--sidebarWidth);
     background: #eaf2f5;
     padding: 8px;
-    /*height: calc(100vh - var(--headerHeight));*/
 }
 .msf-sub-content {
     width: 100%;
-    height: 100%;
+    min-height: calc(100vh - var(--headerHeight) - 20px);
+    height: -webkit-fill-available;
     background: #f9f8f8;
     padding: 10px;
 }

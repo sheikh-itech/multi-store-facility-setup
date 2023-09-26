@@ -61,12 +61,12 @@ export class QrCodeUpdate {
             this.alert.warn('Product name needed', this.options);
             return;
         }
-        this.searchQrCodes(environment.qrSearchByName + this.qrName);
+        this.searchQrCodes(environment.qrSearchName + this.qrName);
     }
 
     searchAllQr(): void {
 
-        this.searchQrCodes(environment.allQrCode);
+        this.searchQrCodes(environment.qrSearchAll);
     }
 
     updateQrDetail() {
@@ -227,13 +227,14 @@ export class QrCodeUpdate {
             qrImageUrl: EncDecUtil.bytesToBase64ImageConvert(data.qrBytes),
             imageUrl: null
         };
-        if(data.imageBytes!=null)
-            this.loadProductImage(data.imageDir, userData);
+        if(data.detail.imagePath!=null)
+            this.loadProductImage(data.detail.imagePath, userData);
 
         return userData;
     }
 
     private loadProductImage(imageDir: string, userData: any) {
+        
         this.http.postApi(environment.productImage, imageDir, { responseType: 'arraybuffer' }).subscribe({
             next: (data) => {
                 const reader = new FileReader();

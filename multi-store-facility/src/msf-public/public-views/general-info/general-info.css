@@ -1,0 +1,8 @@
+.card {
+    min-width: 25%;
+    max-width: 30%;
+    display: inline-block;
+    margin-bottom: 2%;
+    margin-left: 2.5%;
+    padding: 0;
+}

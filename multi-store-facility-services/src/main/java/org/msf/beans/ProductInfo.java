@@ -4,8 +4,6 @@ public class ProductInfo {
 
 	private String id;
 	private byte[] qrBytes;
-	private byte[] imageBytes;
-	private String imageDir;
 	private String name;
 	private float price;
 	private String desc;
@@ -75,17 +73,5 @@ public class ProductInfo {
 	}
 	public void setDetail(ProductDetail detail) {
 		this.detail = detail;
-	}
-	public byte[] getImageBytes() {
-		return imageBytes;
-	}
-	public void setImageBytes(byte[] imageBytes) {
-		this.imageBytes = imageBytes;
-	}
-	public String getImageDir() {
-		return imageDir;
-	}
-	public void setImageDir(String imageDir) {
-		this.imageDir = imageDir;
 	}
 }

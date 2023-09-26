@@ -1,17 +1,13 @@
 package org.msf.api.business;
 
-import java.io.FileNotFoundException;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.msf.beans.Product;
 import org.msf.beans.Response;
-import org.msf.service.business.FileStorageService;
+import org.msf.service.business.ProductDetailService;
 import org.msf.service.business.ZXingQRCodeGenerator;
 import org.msf.utils.MsfSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +31,8 @@ public class ZXingQRCodeApi {
 	@Autowired
 	private ZXingQRCodeGenerator qrCodeGenerator;
 	@Autowired
-	private FileStorageService storageService;
+	private ProductDetailService productService;
+	
 	
 	@RequestMapping(value="/generate", method=RequestMethod.POST)
 	public ResponseEntity<Response> generateQRCode(@RequestPart String productDetail,
@@ -125,13 +122,13 @@ public class ZXingQRCodeApi {
 	}
 	
 	@RequestMapping(value = "/search/{name}", method = RequestMethod.GET)
-    public ResponseEntity<Response> searchQrByName(@PathVariable("name") String name) {
+    public ResponseEntity<Response> searchProductByName(@PathVariable("name") String name) {
 
 		Response response = new Response();
 
         try {
             
-            response.setData(qrCodeGenerator.findQRCodeByName(name));
+            response.setData(productService.findProductInfoByName(name, false));
             response.setSuccess(true);
             response.setMessage("Qr code info");
             response.setStatus(HttpStatus.OK);
@@ -146,13 +143,13 @@ public class ZXingQRCodeApi {
     }
 	
 	@RequestMapping(value = "/search/all", method = RequestMethod.GET)
-    public ResponseEntity<Response> searchAllQrCodeInfo(HttpServletRequest request) {
+    public ResponseEntity<Response> searchAllProductsInfo() {
 
         Response response = new Response();
 
         try {
             
-            response.setData(qrCodeGenerator.findAllQRCodeInfo(securityUtil.getUserId(request)));
+            response.setData(productService.findAllProductsInfo(false));
             response.setSuccess(true);
             response.setMessage("All Qr code info");
             response.setStatus(HttpStatus.OK);
@@ -165,45 +162,4 @@ public class ZXingQRCodeApi {
         	return new ResponseEntity<Response>(response, HttpStatus.OK);
         }
     }
-	
-	@RequestMapping(value = "/image/download", method = RequestMethod.POST) 
-	public ResponseEntity<?> downloadSvnFile(@RequestBody String filePath) {
-		
-		try {
-			
-			Resource resource = storageService.downloadFileAsResource(filePath);
-			String mediaType = determineMediaType(filePath);
-			
-			HttpHeaders headers = new HttpHeaders();
-			
-			headers.add("Access-Control-Expose-Headers", "Content-Disposition");
-			headers.add("Access-Control-Expose-Headers", "Content-Type");
-			headers.add("Content-Type", mediaType);
-			headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", filePath.substring(filePath.indexOf("/")+1)));
-			headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-			headers.add("Pragma", "no-cache");
-			headers.add("Expires", "0");
-
-			return ResponseEntity.ok()
-					.headers(headers).contentLength(resource.getFile().length()).body(resource);
-			
-		} catch (FileNotFoundException ex) {
-			Response res = new Response();
-			res.setMessage(ex.getMessage());
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
-	    } catch (Exception ex) {
-	    	Response res = new Response();
-			res.setMessage("Image access error from server");
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(res);
-	    }
-	}
-	
-	//Determine media type based on file extension
-	private String determineMediaType(String fileName) {
-	
-	    if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg"))
-	        return "image/jpeg";
-	    
-	    return "application/octet-stream";
-	}
 }

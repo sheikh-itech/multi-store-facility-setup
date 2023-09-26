@@ -11,7 +11,7 @@ public class ProductDetail {
 	private String weightUnit;
 	private String dimention;
 	private List<String> info;
-	private String imageName;
+	private String imagePath;
 	
 	public String getBrand() {
 		return brand;
@@ -55,10 +55,10 @@ public class ProductDetail {
 	public void setWeightUnit(String weightUnit) {
 		this.weightUnit = weightUnit;
 	}
-	public String getImageName() {
-		return imageName;
+	public String getImagePath() {
+		return imagePath;
 	}
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }
