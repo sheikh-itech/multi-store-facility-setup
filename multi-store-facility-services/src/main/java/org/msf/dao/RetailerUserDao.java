@@ -2,6 +2,7 @@ package org.msf.dao;
 
 import java.util.List;
 
+import org.msf.beans.Retailer;
 import org.msf.beans.User;
 import org.msf.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,31 +14,28 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDao {
+public class RetailerUserDao {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
-	public User persistUser(User user) {
+	public Retailer persistUser(Retailer user) {
 		
-		if(!mongoTemplate.collectionExists(Constants.MSF_Users)) {
+		if(!mongoTemplate.collectionExists(Constants.MSF_Retailers)) {
 			Index index = new Index();
 			index.on("id", Sort.Direction.ASC).unique();
-			mongoTemplate.indexOps(Constants.MSF_Users).ensureIndex(index);
+			mongoTemplate.indexOps(Constants.MSF_Retailers).ensureIndex(index);
 		}
 		
-		return mongoTemplate.insert(user, Constants.MSF_Users);
+		return mongoTemplate.insert(user, Constants.MSF_Retailers);
 	}
 	
-	public List<User> fetchUserDetail(String username) {
+	public List<Retailer> fetchUserDetail(String username) {
 		
 		Query query = new Query().addCriteria(
-			    new Criteria().orOperator(
-			        Criteria.where("email").is(username),
-			        Criteria.where("userId").is(username)
-			    )
+				Criteria.where("email").is(username)
 			);
 		
-		return mongoTemplate.find(query, User.class, Constants.MSF_Users);
+		return mongoTemplate.find(query, Retailer.class, Constants.MSF_Retailers);
 	}
 }

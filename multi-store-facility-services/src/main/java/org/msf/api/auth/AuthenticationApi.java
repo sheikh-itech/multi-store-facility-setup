@@ -42,7 +42,7 @@ public class AuthenticationApi {
 	@Autowired
 	private MsfAuthUtil authUtil;
 	
-	@RequestMapping(value="/user", method=RequestMethod.POST)
+	@RequestMapping(value="/user/login", method=RequestMethod.POST)
 	public ResponseEntity<Response> authenticate(@RequestBody LoginInfo login) {
 	
 		Response res = new Response();
@@ -184,7 +184,7 @@ public class AuthenticationApi {
 		}
 	}
 	
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/logout", method = RequestMethod.POST)
 	public void logout() {
 		
 	}

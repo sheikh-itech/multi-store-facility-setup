@@ -72,6 +72,7 @@ public class ProductDetailApi {
 	public ResponseEntity<?> downloadSvnFile(@RequestBody String filePath) {
 		
 		try {
+			filePath = filePath.replaceAll("\"", "");
 			
 			Resource resource = storageService.downloadFileAsResource(filePath);
 			String mediaType = determineMediaType(filePath);
