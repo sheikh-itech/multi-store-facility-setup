@@ -12,7 +12,6 @@ function Settings({ nav }: any): JSX.Element {
         nav = useNavigation();
 
     const handleNavigation = (path: any) => {
-        console.log('path to profile: '+path)
         nav.navigate(path);
         //nav.navigate(path, { firstName: 'Hapheej', lastName: 'M' });
     };

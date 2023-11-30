@@ -8,7 +8,7 @@ function NavStack(): JSX.Element {
 
     return (
         <>
-            <Stack.Navigator initialRouteName="Home">
+            <Stack.Navigator initialRouteName="ProductsInfo">
 
                 {routes.map((route: any) => (
                     <Stack.Screen

@@ -8,9 +8,10 @@ type inputValues = PropsWithChildren<{
     keepFocused?: boolean;
     secureTextEntry?: boolean;
     keyboardType?: string;
+    width?: any;
 }>;
 
-function InputFocusBlur({ placeholder, value, onChangeText, secureTextEntry, keepFocused, keyboardType}: inputValues) {
+function InputFocusBlur({ placeholder, value, onChangeText, secureTextEntry, keepFocused, keyboardType, width}: inputValues) {
 
     const [isFocused, setIsFocused] = useState(false);
 
@@ -21,7 +22,8 @@ function InputFocusBlur({ placeholder, value, onChangeText, secureTextEntry, kee
     const handleBlur = () => {
         setIsFocused(false);
     };
-
+    if(width)
+        styles.input.width = width;
     return (
         <TextInput
             style={
@@ -44,7 +46,8 @@ export default InputFocusBlur;
 
 const styles = StyleSheet.create({
     input: {
-        marginBottom: 10
+        marginBottom: 10,
+        width: 200
     },
     focusInput: {
         borderWidth: 2,

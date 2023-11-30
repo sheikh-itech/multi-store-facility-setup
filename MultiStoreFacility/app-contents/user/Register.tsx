@@ -51,9 +51,7 @@ function Register({ nav }: any): JSX.Element {
 
     const handleRegister = (user: any) => {
 
-        let url = ApiUrls.AddObjects;
-        console.log(url);
-        HttpService.postApi(url, user)
+        HttpService.postApi(ApiUrls.AddObjects, user)
             .then((data) => {
                 console.log('Post Request Successful:', data);
             })

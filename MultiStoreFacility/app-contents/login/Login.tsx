@@ -6,6 +6,7 @@ import { View } from 'react-native';
 import HttpService from '../common/services/HttpService';
 import ApiUrls from '../navigation/ApiUrls';
 import UserService from '../common/services/UserService';
+import { Pressable } from 'react-native';
 
 function Login({ setIsLoggedIn }: any): JSX.Element {
 
@@ -48,11 +49,11 @@ function Login({ setIsLoggedIn }: any): JSX.Element {
         }));
     };
 
-    const handleLogin = (user: any) => {
+    const handleLogin = async (user: any) => {
         
         HttpService.postApi(ApiUrls.Authenticate, user)
             .then((res: any) => {
-                if(res.success) {
+                if(res.success || (res.status===200)) {
                     setIsLoggedIn(true);
                     UserService.setUserDetail(res.data);
                 } else {
@@ -67,23 +68,28 @@ function Login({ setIsLoggedIn }: any): JSX.Element {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View>
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
+                <View style={styles.container}>
                     <InputFocusBlur
                         placeholder="Username"
                         value={user.username}
                         onChangeText={(text) => handleInputChange('username', text)}
+                        width={'90%'}
                     />
                     <InputFocusBlur
                         placeholder="Password"
                         value={user.password}
                         onChangeText={(text) => handleInputChange('password', text)}
                         secureTextEntry={true}
+                        width={'90%'}
                     />
-                </View>
 
-                <Button title="Login" onPress={() => handleLogin(user)} />
+                    <Pressable style={styles.button} onPress={() => handleLogin(user)}>
+                        <Text style={styles.loginText}>Login</Text>
+                    </Pressable>
+                </View>
+                
 
             </ScrollView>
         </SafeAreaView>
@@ -92,26 +98,29 @@ function Login({ setIsLoggedIn }: any): JSX.Element {
 export default Login;
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1
+    },
+    scrollView: {
+        flexGrow: 1,
+        justifyContent: 'center'
+    },
     container: {
         flex: 1,
         padding: 16,
+        justifyContent: 'center', // Center children vertically
+        alignItems: 'center', // Center children horizontally
     },
-    table: {
-        marginTop: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
+    button: {
+        width: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#65a4ad',
+        borderColor: '#17a2b8',
+        paddingTop: 10,
+        paddingBottom: 10
     },
-    tableRow: {
-        flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        padding: 10,
-    },
-    tableHeaderCell: {
-        flex: 1,
-        fontWeight: 'bold',
-    },
-    tableCell: {
-        flex: 1,
+    loginText: {
+        color: '#fff'
     }
 });

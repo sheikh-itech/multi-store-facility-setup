@@ -9,6 +9,7 @@ import RNCameraMSFItemsCart from '../body-content/cart/RNCameraMSFItemsCart';
 import RNCameraImageQRScanner from '../body-content/RNCameraScanner/RNCameraImageQRScanner';
 import RNCameraVideoQRScanner from '../body-content/RNCameraScanner/RNCameraVideoQRScanner';
 import Login from '../login/Login';
+import ProductsInfo from '../body-content/products/ProductsInfo';
 
 /*  Add route defination for all components/views here
     keep headerShown 'true' to Show the navigation bar
@@ -16,7 +17,8 @@ import Login from '../login/Login';
 
 export const routes = [
     { name: 'Login', ele: Login, options: { headerShown: false } },
-    { name: 'Home', ele: Home, options: { headerShown: true } },
+    { name: 'ProductsInfo', ele: ProductsInfo, options: { headerShown: false } },
+    { name: 'Home', ele: Home, options: { headerShown: false } },
     { name: 'Profile', ele: Profile, options: { headerShown: false } },
     { name: 'UpdateProfile', ele: UpdateProfile, options: { headerShown: false } },
     { name: 'Register', ele: Register, options: { headerShown: false } },
