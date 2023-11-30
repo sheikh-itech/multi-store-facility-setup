@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MsfModule } from 'src/msf-app/msf-module';
 import { MsfPublicModule } from 'src/msf-public/msf-public-module';
-import { SharedModule } from './shared.module';
+import { SharedModule } from './shared-module';
 import { MaterialModule } from './material-module';
 
 @NgModule({

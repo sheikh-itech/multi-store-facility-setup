@@ -4,7 +4,7 @@ import { MsfHttpService } from 'src/common/services/msf-http-service';
 import { Validation } from 'src/common/utilities/validation';
 import { AlertService } from '../alert/alert-service';
 import { UserService } from 'src/common/services/user-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -21,7 +21,8 @@ export class MsfLogin implements OnInit {
         keepAfterRouteChange: false
     };
 
-    constructor(private http: MsfHttpService, private alert: AlertService, private router: Router) {
+    constructor(private http: MsfHttpService, private alert: AlertService, private router: Router,
+        private route: ActivatedRoute) {
         this.login = new Login();
     }
 
@@ -29,28 +30,42 @@ export class MsfLogin implements OnInit {
 
         let principal = UserService.getUserToken();
 
+        let activeLogin: boolean = false;
+        this.route.queryParams.subscribe(params => {
+            if(Object.keys(params).length > 0)
+                activeLogin = params['activeLogin']=="true";
+        });
+
         if(principal && principal.length>100) {
 
             this.http.postApi(environment.validate, null).subscribe({
                 next: (resp) => {
                     if(resp.success && resp.status=='OK')
                         this.router.navigate(['/home']);
-                    else
+                    else if(activeLogin)
                         this.router.navigate(['/login']);
+                    else
+                        this.publicInfo();
                 },
                 error: (err) => {
-                    this.router.navigate(['/login']);
+                    if(activeLogin)
+                        this.router.navigate(['/login']);
+                    else
+                        this.publicInfo();
                 },
                 complete: () => {
                     // This block is executed when the observable completes (optional)
                 }
             }); 
-        }
+        } else if(activeLogin)
+            this.router.navigate(['/login']);
+            else
+                this.publicInfo();
     }
 
     publicInfo(): void {
 
-        this.router.navigate(['/public']);
+        this.router.navigate(['/msf']);
     }
 
     signIn(): void {

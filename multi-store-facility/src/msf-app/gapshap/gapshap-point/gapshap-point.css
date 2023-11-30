@@ -1,0 +1,37 @@
+.toast:not(.show) {
+    display: block;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.me-auto {
+    width: 85%;
+}
+.date-time {
+    width: 10%;
+    text-align: end;
+}
+
+.toast-header {
+    background-color: #b4cce1;
+}
+
+.sub-toast-header {
+    border-radius: calc(var(--bs-toast-border-radius) - var(--bs-toast-border-width));
+}
+.sub-comments {
+    text-align: right;
+    color: #3f3fc1;
+}
+.comments {
+    display: none;
+}
+.sub-comments>a:hover ~ .comments {
+    display: block;
+}
+
+a {
+    text-decoration: underline !important;
+    cursor: pointer;
+}

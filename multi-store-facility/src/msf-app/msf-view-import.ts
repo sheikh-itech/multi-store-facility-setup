@@ -8,7 +8,7 @@ import { MsfSidebarOld } from "src/app/common-views/msf-sidebar-old/msf-sidebar-
 import { MsfHeader } from "src/app/common-views/msf-header/msf-header";
 import { MsfFooter } from "src/app/common-views/msf-footer/msf-footer";
 
-import { HomeComponent } from "src/app/common-views/home/home.component";
+import { HomeComponent } from "src/msf-app/home/home.component";
 import { ResetPassword } from "src/msf-app/user/reset-password/reset-password";
 import { UserDetail } from "src/msf-app/user/user-detail/user-detail";
 import { UserNotification } from "src/msf-app/user/user-notification/user-notification";
@@ -18,6 +18,8 @@ import { AccessDenied } from "src/app/common-views/access-denied/access-denied";
 import { QrCodeGenerate } from "src/msf-app/business/qr-code/qr-code-generate/qr-code-generate";
 import { ProductCategory } from "src/msf-app/product/product-category/product-category";
 import { QrCodeUpdate } from "src/msf-app/business/qr-code/qr-code-update/qr-code-update";
+import { GapshapPoint } from "src/msf-app/gapshap/gapshap-point/gapshap-point";
+import { GapshapComments } from "src/msf-app/gapshap/gapshap-comments/gapshap-comments";
 
 
 /**
@@ -32,13 +34,14 @@ export const MsfViewImport = {
         MsfLayout, MsfAnimateLayout, MsfHeader, MsfFooter, MsfSidebarOld, MsfSidebar, MsfAnimateSidebar,
         HomeComponent, UserDetail, UserUpdate, ResetPassword, UserNotification, 
         QrCodeGenerate, QrCodeUpdate,ProductCategory,
+        GapshapPoint, GapshapComments,
 
         AccessDenied,
         AngularDefaultPage
     ],
 
     /**
-     * All below ro routing reuse purpose
+     * All below for routing reuse purpose
      */
     
     QrCodeGenerate: QrCodeGenerate,
@@ -50,5 +53,6 @@ export const MsfViewImport = {
     UserUpdate: UserUpdate,
     ResetPassword: ResetPassword,
     UserNotification: UserNotification,
-    AccessDenied: AccessDenied
+    AccessDenied: AccessDenied,
+    GapshapPoint: GapshapPoint
 }

@@ -4,11 +4,11 @@ import { MsfHttpService } from 'src/common/services/msf-http-service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: 'public-general-info',
-    templateUrl: './general-info.html',
-    styleUrls: ['./general-info.css']
+    selector: 'product-home',
+    templateUrl: './product-home.html',
+    styleUrls: ['./product-home.css']
 })
-export class GeneralInfo implements OnInit {
+export class ProductHome implements OnInit {
 
     private options = {
         autoClose: true,

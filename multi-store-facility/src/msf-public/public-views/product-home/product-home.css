@@ -1,8 +1,12 @@
 .card {
-    min-width: 25%;
+    min-width: 300px;
     max-width: 30%;
     display: inline-block;
     margin-bottom: 2%;
     margin-left: 2.5%;
     padding: 0;
+}
+ul {
+    list-style: decimal;
+    padding-left: 30px;
 }

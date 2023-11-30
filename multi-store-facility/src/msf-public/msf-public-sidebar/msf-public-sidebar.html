@@ -4,26 +4,26 @@
     <ul class="msf-nav-list"  (click)="onMenuItemClick($event)">
         
         <li class="menu-items">
-            <a routerLink="/login">
+            <a routerLink="/login" [queryParams]="{ activeLogin: true }">
                 <i class="fa fa-sign-in" aria-hidden="true"></i>
                 <span>Login</span>
             </a>
         </li>
 
         <li class="menu-items">
-            <a routerLink="/public/register">
+            <a routerLink="/msf/register">
                 <i class="fa fa-user-plus" aria-hidden="true"></i>
                 <span>Register</span>
             </a>
         </li>
         <li class="menu-items">
-            <a routerLink="/public">
+            <a routerLink="/msf">
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
-                <span>General Info</span>
+                <span>Product Info</span>
             </a>
         </li>
         <li class="menu-items">
-            <a routerLink="/public/futureTasks">
+            <a routerLink="/msf/futureTasks">
                 <i class="fa fa-file-text"></i>
                 <span>Future Tasks</span>
             </a>
@@ -37,10 +37,10 @@
             </a>
             <ul class="msf-sub-nav">
                 <li class="menu-items">
-                    <a routerLink="/public">Info 1</a>
+                    <a routerLink="/msf">Info 1</a>
                 </li>
                 <li class="menu-items">
-                    <a routerLink="/public">Info 2</a>
+                    <a routerLink="/msf">Info 2</a>
                 </li>
             </ul>
         </li>

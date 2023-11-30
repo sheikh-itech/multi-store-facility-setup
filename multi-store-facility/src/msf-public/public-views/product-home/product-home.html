@@ -1,29 +1,30 @@
-
 <div class="container">
 
     <div class="row">
-        
+
         <ng-container *ngFor="let product of productsInfo">
-                
+
             <div class="card">
-                <img [src]="product.imageUrl" alt={{product.name}} width="100%" height="200px" class="w-100 border-bottom">
+                <img [src]="product.imageUrl" alt={{product.name}} width="100%" height="200px"
+                    class="w-100 border-bottom">
                 <div class="card-body">
                     <h5 class="card-title">{{product.name}}</h5>
                     <p class="card-text">{{product.desc}}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" *ngFor="let item of product.detail.info">
+                    <!--<li class="list-group-item" *ngFor="let item of product.detail.info">-->
+                    <li *ngFor="let item of product.detail.info">
                         {{item}}
                     </li>
                 </ul>
                 <div class="card-body">
-                    <a href="#" class="card-link">More Info</a>
-                    <a href="#" class="card-link">Other Products</a>
+                    <a routerLink="/msf" class="card-link">More Info</a>
+                    <a routerLink="/msf/futureTasks" class="card-link">Other Products</a>
                 </div>
             </div>
-    
+
         </ng-container>
-        
+
     </div>
 
 </div>

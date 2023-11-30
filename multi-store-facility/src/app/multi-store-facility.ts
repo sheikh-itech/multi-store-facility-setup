@@ -41,7 +41,7 @@ export class MultiStoreFacility implements OnInit, AfterViewInit {
                 }
             }); 
         } else
-            this.router.navigate(['/public']);
+            this.router.navigate(['/msf']);
     }
 
     ngAfterViewInit(): void {

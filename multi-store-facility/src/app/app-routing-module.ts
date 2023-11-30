@@ -31,14 +31,15 @@ const routes: Routes = [
             { path: 'qrGenerate', component:  MsfViewImport.QrCodeGenerate, canActivate:[RouteGuard]},
             { path: 'qrSearchUpdate', component:  MsfViewImport.QrCodeUpdate},
             { path: 'category', component:  MsfViewImport.ProductCategory},
+            { path: 'gapshapPoint', component:  MsfViewImport.GapshapPoint},
         ]
     },
 
     {
-        path: 'public',
+        path: 'msf',
         component: MsfPublicLayout,
         children: [
-            { path: '', component:  MsfPublicViewImport.GeneralInfo},
+            { path: '', component:  MsfPublicViewImport.ProductHome},
             { path: 'futureTasks', component:  MsfPublicViewImport.FutureTasks},
             { path: 'register', component:  MsfPublicViewImport.UserRegister}
         ]

@@ -1,7 +1,7 @@
 import { MsfPublicLayout } from "src/msf-public/msf-public-layout/msf-public-layout";
 import { MsfPublicSidebar } from "src/msf-public/msf-public-sidebar/msf-public-sidebar";
 
-import { GeneralInfo } from "src/msf-public/public-views/general-info/general-info";
+import { ProductHome } from "src/msf-public/public-views/product-home/product-home";
 import { FutureTasks } from "src/msf-public/public-views/future-tasks/future-tasks";
 import { UserRegister } from "src/msf-public/public-views/user-register/user-register";
 
@@ -17,13 +17,13 @@ export const MsfPublicViewImport = {
     declarations: [
         MsfPublicLayout, MsfPublicSidebar, UserRegister,
         
-        GeneralInfo, FutureTasks
+        ProductHome, FutureTasks
     ],
 
     /**
      * All below ro routing reuse purpose
      */
-    GeneralInfo: GeneralInfo,
+    ProductHome: ProductHome,
     FutureTasks: FutureTasks,
     UserRegister: UserRegister
 }
