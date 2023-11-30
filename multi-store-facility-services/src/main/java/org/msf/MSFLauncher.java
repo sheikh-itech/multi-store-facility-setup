@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MSFLauncher {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(MSFLauncher.class, args);
+		
 		System.out.println("MSF Launcher up and running...");
 	}
 }

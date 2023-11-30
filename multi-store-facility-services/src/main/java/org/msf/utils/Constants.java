@@ -15,5 +15,6 @@ public class Constants {
 	public static final String MSF_QRCode = "QRCodes";
 	public static final String MSF_Category = "Category";
 	public static final String MSF_Rating = "Ratings";
+	public static final String MSF_GapShap = "GapShap";
 	//public static final String MSF_Address = "Address";
 }

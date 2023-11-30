@@ -41,7 +41,7 @@ public class MSFRequestHandler extends OncePerRequestFilter {
 					"Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers");
 			return;
 
-		} else if (request.getRequestURI().indexOf("/auth/user") > 0 ||
+		} else if (request.getRequestURI().indexOf("/auth/user/login") > 0 ||
 				request.getRequestURI().indexOf("/user/validate") > 0 ||
 				request.getRequestURI().indexOf("/public") > 0) {
 			chain.doFilter(request, response);
