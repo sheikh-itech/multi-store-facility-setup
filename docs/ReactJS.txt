@@ -1,0 +1,67 @@
+React JS Setup
+==============
+
+Node Version
+------------
+>node --version
+
+Create New App
+--------------
+>npx create-react-app <react-app-name>
+OR
+>npm init react-app <react-app-name>
+
+>npm audit fix --force
+
+With Custom Template
+--------------------
+>npx create-react-app <app-name> --template typescript
+
+Install React Router
+--------------------
+>npm install --save react-router-dom
+>npm i -D react-router-dom@latest --save
+
+React Icons
+-----------
+>npm install react-icons --save
+Link=> https://react-icons.github.io/react-icons/search?q=home
+
+Bootstrap Icons
+---------------
+>npm install react-bootstrap-icons --save
+>npm i font-awesome
+
+Http Support
+------------
+>npm install axios --save
+
+Run React App
+=============
+
+>npm start
+OR
+>yarn start
+
+Run React App With Https
+------------------------
+>set HTTPS=true && npm start
+
+Async Programming
+-----------------
+>npm i regenerator-runtime core-js
+
+
+npm start
+  Starts the development server.
+
+npm run build
+  Bundles the app into static files for production.
+
+npm test
+  Starts the test runner.
+
+npm run eject
+  Removes this tool and copies build dependencies, configuration files
+  and scripts into the app directory. If you do this, you can’t go back!
+

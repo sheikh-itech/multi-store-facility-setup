@@ -1,0 +1,34 @@
+
+>npm install --save react-navigation
+>npm install --save react-native-gesture-handler
+>npm link react-native-gesture-handler
+
+#Connect Mobile
+>npx react-native run-android
+>npm start
+>adb -s N7XCXWWG794LBYLF reverse tcp:8081 tcp:8081
+
+Create App [Using TS Template]
+==============================
+>npx react-native@latest init <App-Name> --template react-native-template-typescript
+
+
+USB Debugging
+=============
+1.	>Setting->About Device->BuildNumber->Touch 7 Times(It will enable Developer ptions)
+2.	>Setting->Developer Options>Enable USB Debugging
+
+3.	>adb devices
+	Search available devices
+4.	>npx react-native run-android
+	This runns the app and installs to device
+5.	>adb -s <device name> reverse tcp:8081 tcp:8081
+	This runs (reverse the app to run on mobile) app
+6. Finally open installed app into mobile
+
+Gradel Build
+------------
+1. After adding changes to gradel.build
+	>[Project]\android>gradlew clean
+
+
