@@ -32,7 +32,7 @@ function Header({ nav }:any): JSX.Element {
             {/*<TouchableOpacity onPress={() => handleNavigation("Home")}>
                 <Text style={styles.menu}>Home</Text>
             </TouchableOpacity>*/}
-            <Button title="Home" onPress={() => handleNavigation("Home")} />
+            <Button title="Products" onPress={() => handleNavigation("ProductsInfo")} />
             <Button title="Register" onPress={() => handleNavigation("Register")} />
             { /* <FontAwesomeIcon icon={faHome} size={24} color="white" /> */ }
             { /* <FontAwesomeIcon icon={faUser} size={24} color="white" /> */ }

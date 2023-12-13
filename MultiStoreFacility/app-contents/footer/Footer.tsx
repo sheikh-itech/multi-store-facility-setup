@@ -16,7 +16,7 @@ function Footer({ nav }: any): JSX.Element {
 
     return (
         <View style={styles.footerContainer}>
-            <TouchableOpacity onPress={() => handleNavigation("Home")}>
+            <TouchableOpacity onPress={() => handleNavigation("ProductsInfo")}>
                 <FontAwesomeIcon icon={faHome} size={24} color="white" />
             </TouchableOpacity>
 
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 16,
-        paddingVertical: 8,
+        paddingVertical: 4,
         backgroundColor: '#2089dc'
     }
 });

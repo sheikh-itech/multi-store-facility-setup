@@ -20,8 +20,10 @@ function Login({ setIsLoggedIn }: any): JSX.Element {
     });
 
     const authorize = () => {
+
         UserService.getUserToken()
             .then(res => {
+                
                 HttpService.postApi(ApiUrls.Validate, res)
                     .then((resp: any) => {
                         if(resp.success)
@@ -58,12 +60,12 @@ function Login({ setIsLoggedIn }: any): JSX.Element {
                     UserService.setUserDetail(res.data);
                 } else {
                     setIsLoggedIn(false);
-                    UserService.logOut();
+                    //UserService.logOut();
                 }
             })
             .catch((error) => {
                 setIsLoggedIn(false);
-                UserService.logOut();
+                //UserService.logOut();
             });
     };
 

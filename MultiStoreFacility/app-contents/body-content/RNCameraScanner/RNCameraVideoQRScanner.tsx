@@ -120,4 +120,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const encKeyFields = ['name', 'desc', 'code', 'category'];
+const encKeyFields = ['name', 'desc', 'category'];

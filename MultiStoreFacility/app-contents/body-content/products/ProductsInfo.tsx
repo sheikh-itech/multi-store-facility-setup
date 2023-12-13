@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import type { PropsWithChildren } from 'react';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native';
-import { View, useColorScheme, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import HttpService from '../../common/services/HttpService';
 import ApiUrls from '../../navigation/ApiUrls';
-import { Pressable } from 'react-native';
-import UserService from '../../common/services/UserService';
 import { Image } from 'react-native-elements';
 
-function ProductsInfo({ navigation }: any): JSX.Element {
+function ProductsInfo(): JSX.Element {
 
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState([]);
@@ -18,50 +15,73 @@ function ProductsInfo({ navigation }: any): JSX.Element {
         handleProductInfo();
     }, []); // Empty dependency array ensures this runs only once on component mount
 
-    const handleProductInfo=()=>{
-       
+    const handleProductInfo = () => {
+
+        setLoading(true);
+
         HttpService.getApi(ApiUrls.AllProducts)
             .then(async (res: any) => {
-                
-                if(res.success) {
-                    for(let i=0; i<res.data.length; i++)
-                        await loadProductImage(res.data[i].detail.imagePath, res.data[i]);
 
+                if (res.success && res.data.length != 0) {
+
+                    const totalImg = [] as any;
+
+                    for (let i = 0; i < res.data.length; i++) {
+
+                        await loadProductImage(res.data[i].detail.imagePath, res.data[i], totalImg, i, res.data.length);
+                    }
                     setProducts(res.data);
-                    setLoading(false);
-                    
+
                 } else {
                     setProducts([]);
+                    setLoading(false);
                 }
             })
             .catch((error) => {
                 setProducts([]);
-                console.log('Error: '+error)
+                setLoading(false);
             });
     }
 
-    const loadProductImage=(imageDir: any, product: any)=> {
+    const loadProductImage = (imageDir: any, product: any, totalImg: any, currIndex: any, lastIndex: any) => {
 
-        HttpService.postApi(ApiUrls.productImage, imageDir, { responseType: 'arraybuffer' })
+        HttpService.postApi(ApiUrls.productImage, imageDir, { responseType: 'blob' })
             .then((res: any) => {
-                console.log('st: '+res)
-                if(res) {
+
+                if (res) {
+
                     const reader = new FileReader();
                     reader.onload = () => {
+
                         product.imageUrl = reader.result as string;
-                        console.log('A: '+product.imageUrl)
+                        setImageLoaded(totalImg, currIndex, lastIndex);
                     };
-                    reader.readAsDataURL(new Blob([res]));
-                    
+                    reader.onabort = () => {
+                        setImageLoaded(totalImg, currIndex, lastIndex);
+                    };
+                    reader.onerror = () => {
+                        setImageLoaded(totalImg, currIndex, lastIndex);
+                    };
+                    reader.readAsDataURL(res);
+
                 } else {
-                    let imageName = imageDir.substring(imageDir.indexOf('/')+1);
-                    console.log('Failed to load false image: '+imageName);
+                    setImageLoaded(totalImg, currIndex, lastIndex);
+                    let imageName = imageDir.substring(imageDir.indexOf('/') + 1);
+                    console.log('Image not loaded: ' + imageName);
                 }
             })
             .catch((error) => {
-                let imageName = imageDir.substring(imageDir.indexOf('/')+1);
-                console.error('Failed to load image: '+imageName);
+                setImageLoaded(totalImg, currIndex, lastIndex);
+                console.error('Image load error: ' + error);
             });
+    }
+
+    const setImageLoaded = (totalImg: any, currIndex: any, lastIndex: any) => {
+        totalImg.push(currIndex);
+        if (totalImg.length === lastIndex) {
+            setLoading(false);
+            totalImg = [];
+        }
     }
 
     if (loading) {
@@ -76,17 +96,17 @@ function ProductsInfo({ navigation }: any): JSX.Element {
         <SafeAreaView>
             <ScrollView>
 
-            <View>
+                <View style={styles.parentContainer}>
 
-                {products.map((product: any) => (
-                    <ProductInfo
-                        key={product.id}
-                        product={product}
-                    />
-                ))}
-                
-            </View>
-            
+                    {products.map((product: any) => (
+                        <ProductInfo
+                            key={product.id}
+                            product={product}
+                        />
+                    ))}
+
+                </View>
+
             </ScrollView>
         </SafeAreaView>
     );
@@ -94,34 +114,59 @@ function ProductsInfo({ navigation }: any): JSX.Element {
 
 export default ProductsInfo;
 
-function ProductInfo({ product }:any): JSX.Element {
-    return(
+function ProductInfo({ product }: any): JSX.Element {
+    return (
         <View style={styles.productContainer}>
-            
+
             {product.imageUrl && (
                 <Image
                     source={{ uri: product.imageUrl }}
                     style={styles.productImage}
                 />
             )}
-            <Text style={styles.productTitle}>{product.name}</Text>
-            <Text style={styles.productDescription}>{product.desc}</Text>
+            <View style={styles.textContainer}>
+                <Text style={styles.productTitle}>{product.name}</Text>
+                <Text style={styles.productDescription}>{product.desc}</Text>
+
+                {product.detail.info && product.detail.info.length > 0 && (
+                    <View style={styles.infoContainer}>
+                        {product.detail.info.map((infoItem: any, index: any) => (
+                            <Text key={index} style={styles.infoItem}>
+                                {index+1}. {infoItem}
+                            </Text>
+                        ))}
+                    </View>
+                )}
+
+            </View>
         </View>
     );
 }
 
 
 const styles = StyleSheet.create({
+
+    parentContainer: {
+        height: '100%',
+        width: '100%',
+
+    },
     productContainer: {
         padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
+        flexDirection: 'row', // Arrange children horizontally
+        //height: 'auto',
     },
     productImage: {
         width: 100,
         height: 100,
         resizeMode: 'cover',
         marginBottom: 8,
+        marginRight: 8, // Add margin between image and text
+    },
+    textContainer: {
+        flex: 1, // Take the remaining horizontal space
     },
     productTitle: {
         fontSize: 18,
@@ -131,5 +176,12 @@ const styles = StyleSheet.create({
     productDescription: {
         fontSize: 16,
         color: '#666',
+    },
+    infoContainer: {
+        marginTop: 8,
+    },
+    infoItem: {
+        fontSize: 14,
+        color: '#333',
     },
 });

@@ -90,6 +90,9 @@ class HttpService {
 
     private static async getInstance() {
 
+        if(HttpService.instance)
+            return HttpService.instance;
+        
         const token = await UserService.getUserToken();
 
         if (!HttpService.instance) {
