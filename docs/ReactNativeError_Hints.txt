@@ -1,0 +1,26 @@
+
+1. Error: Unable to resolve module `./debugger-ui/debuggerWorker.d9da4ed7` from ``:
+
+None of these files exist:
+  * debugger-ui/debuggerWorker.d9da4ed7(.native|.native.js|.js|.native.json|.json|.native.ts|.ts|.native.tsx|.tsx)
+
+Fix=> Un-Install app then run again [May be previous install done without debug]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

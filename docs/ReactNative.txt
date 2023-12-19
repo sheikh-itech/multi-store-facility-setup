@@ -3,10 +3,21 @@
 >npm install --save react-native-gesture-handler
 >npm link react-native-gesture-handler
 
-#Connect Mobile
->npx react-native run-android
->npm start
+Connect Mobile
+==============
+>adb reverse tcp:8081 tcp:8081
+	OR
 >adb -s N7XCXWWG794LBYLF reverse tcp:8081 tcp:8081
+
+>npx react-native run-android
+	OR
+>npx react-native run-android -- --reset-cache
+
+
+Debug
+=====
+chrome://inspect/#devices
+
 
 Create App [Using TS Template]
 ==============================
