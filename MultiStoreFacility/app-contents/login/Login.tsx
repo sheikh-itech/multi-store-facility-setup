@@ -60,7 +60,7 @@ function Login({ setIsLoggedIn }: any): JSX.Element {
                     UserService.setUserDetail(res.data);
                 } else {
                     setIsLoggedIn(false);
-                    //UserService.logOut();
+                    UserService.logOut();
                 }
             })
             .catch((error) => {

@@ -108,7 +108,7 @@ public class MsfSecurityUtil {
 	private String createToken(Map<String, Object> claims, String username) {
 			
 		return	Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(new Date(System.currentTimeMillis()))
-			.setExpiration(new Date(System.currentTimeMillis()+ idleTime()))
+			.setExpiration(new Date(idleTime()))
 				.signWith(SignatureAlgorithm.HS256, securityKey).compact();
 	}
 	
@@ -126,19 +126,21 @@ public class MsfSecurityUtil {
 		String [] timeDetail = idleLoginTime.split(":");
 		if(timeDetail.length==3) {
 			
-			int hours = Utility.parseInt(timeDetail[0]);
-			int minutes = Utility.parseInt(timeDetail[1]);
-			int seconds = Utility.parseInt(timeDetail[2]);
+			int days = Utility.parseInt(timeDetail[0]);
+			int hours = Utility.parseInt(timeDetail[1]);
+			int minutes = Utility.parseInt(timeDetail[2]);
+			int seconds = Utility.parseInt(timeDetail[3]);
 			
+			days = days<0 ? 0 : days;
 			hours = (hours<0 || hours>24) ? 0 : hours;
 			minutes = (minutes<1 || minutes>60) ? 0 : minutes;
 			seconds = (seconds<1 || seconds>60) ? 0 : seconds;
 			
-			finalTime = (hours*60*60*1000)+(minutes*60*1000)+(seconds*1000);
+			finalTime = (days*24*60*60*1000)+(hours*60*60*1000)+(minutes*60*1000)+(seconds*1000);
 		} else 
-			finalTime= 10*60*1000;
+			finalTime= 10*60*1000;	//default time 10 minutes
 		
-		return finalTime;
+		return System.currentTimeMillis() + finalTime;
 	}
 	
 	public String getUsername(HttpServletRequest request) throws UserValidationException {

@@ -44,13 +44,13 @@ export class ProductHome implements OnInit {
 
     private loadProductImage(imageDir: string, product: any) {
 
-        this.http.postApi(environment.productImage, imageDir, { responseType: 'arraybuffer' }).subscribe({
+        this.http.postApi(environment.productImage, imageDir, { responseType: 'blob' }).subscribe({
             next: (data) => {
                 const reader = new FileReader();
                 reader.onload = () => {
                     product.imageUrl = reader.result as string;
                 };
-                reader.readAsDataURL(new Blob([data]));
+                reader.readAsDataURL(data);
             },
             error: (err) => {
                 let imageName = imageDir.substring(imageDir.indexOf('/')+1);
